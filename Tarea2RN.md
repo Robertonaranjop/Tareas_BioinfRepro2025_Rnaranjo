@@ -1,6 +1,6 @@
 ## Tarea 2
 
-## 1.Crear repositorio propio ["Tareas_BioinfRepro2025_Rnaranjo"]([GitHub - Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo: Repositorio de las actividades practicas realizadas en el curso de Bioinformática](https://n9.cl/08p5su))
+## 1. Crear repositorio propio ["Tareas_BioinfRepro2025_Rnaranjo"](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo.git)
 
 Se creo una cuenta en la plataforma Github, se establecio un nombre de usuario llamado "robertonaranjop", al  cual se le asocio un correo "robertonaranjopartarrieu@gmail.com"
 
@@ -20,7 +20,7 @@ y para visulizar que se hayan realizado los cambios se uso el siguiente codigo:
 $ git config --global user.email   
 ```
 
-## 2.Clonar repositorio de la clase
+## 2. Clonar repositorio de la clase
 
 Para poder copiar el repositorio solo del año 2021, utilizo el codigo Git clone con la opcion branch, single branch 
 
@@ -46,7 +46,7 @@ $ git sparse-checkout init --cone
 $ git sparse-checkout set Unidad2
 ```
 
-![..](C:\Users\MSI\Pictures\script2.png)
+![..](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/b45e19e0f71abb4243f5a07fbb59d5bdb6b2f149/script2.png)
 
 ## 3. Analizar Script pipeline
 
@@ -209,3 +209,4 @@ done
 populations -t 36 -b 1 -P $src/stacks/ -M $src/popmap \
               -p 9 -f p_value -k -r 0.75 -s --structure --phylip --genepop
 ```
+
