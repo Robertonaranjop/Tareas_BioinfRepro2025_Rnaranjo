@@ -1,0 +1,106 @@
+ 
+
+ #Tarea 1  Roberto Naranjo
+
+#Ejercicio 1
+
+ #1)Primero abrir el espacio de trabajo bioinfo1@genomica.med.uchile.cl
+
+
+ #2)Ingresar a mi directorio "rnaranjo" con el comando 
+
+ 		cd rnaranjo
+
+ #3)Crear un directorio "maiz" con el comando 
+
+ 		mkdir maiz
+
+ 
+ #4)Crear un archivo txt llamado maiz.txt con el comando 
+
+ 		nano maiz.txt 
+
+ #5)Copiar el contenido de /Unidad1/Sesion1/Prac_Uni1/Maiz/nuevos_final.fam y guardar los cambios 
+
+ #6)Verificar si se copio y guardo el contenido correctamente
+
+ 		less maiz.txt
+
+
+#Ejercicio 2
+
+#1) Crear 1 directorio en el directorio rnaranjo especifico del ejercicio 2
+
+		mkdir Pob
+
+#2) Crear 4 directorio simultaneamente en el directorio Pob, llamados PobA, PobB, PobC, PobD 
+ 
+ 		mkdir PobA PobB PobC PobD
+
+#3)Crea un archivo en cada uno de los directorios PobA PobB PobC PobD que en su interior diga "Este es un individuo de la población x" donde x debe corresponder al nombre del directorio y guardar los cambios realizados
+
+		nano pob"X" 
+
+#4)Verificar contenido del archivo 
+
+		less pob"X"
+
+#Ejecicio 3
+#1)Crear un directorio especial para guardar mis secuencias llamados sec1
+
+	mkdir sec1
+
+#2)Descargar mis secuencias de amanita muscaria  y guardarlas en un archivo llamado amanita.fasta 
+
+		wget -O amanita.fasta "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&rettype=fasta&id=DQ822791.1,DQ179118.1,AF024465.1,OQ324779.1,OQ324778.1"
+
+#3)Revisar contenido secuencias descargadas en archivo amanita.fasta 
+
+		less amanita.fasta
+
+#4)Extraer información de mi archivo amanita.fasta. usar el caracter ">" es util ya que todas las secuencias fastas incian con este 
+
+		 grep ">" amanita.fasta
+
+#5)Realizamos un script que permita normalizar y ordenar la secuencias de los archivos FASTA, ubicados en nuestro archivo amanita.fasta y usamos la funcion awk o grep para contavilizar individualmente por secuencia cuantas veces aparece TGCA
+
+#Opcion 1 usando awk 
+awk -v motif="TGCA" '    #dandole el motivo a buscar"TGCA"
+BEGIN{OFS="\t"}
+/^>/{
+  if (seq!="") {       
+    up=seq; gsub(/[a-z]/, toupper("&"), up); gsub(/[^ACGT]/,"", up)       #Normalizamos la secuencia
+    c=0; for(i=1;i<=length(up)-length(motif)+1;i++) if(substr(up,i,length(motif))==motif) c++
+    print id, length(up), c
+  }
+  id=substr($0,2); split(id,a,/[ \t]/); id=a[1]          #Conservando el id utilizando el simbolo ">"
+  seq=""; next
+}
+{ gsub(/\r/,""); seq=seq $0 }                            #concatena las lineas en una solacadena
+END{
+  if (seq!="") {
+    up=seq; gsub(/[a-z]/, toupper("&"), up); gsub(/[^ACGT]/,"", up)
+    c=0; for(i=1;i<=length(up)-length(motif)+1;i++) if(substr(up,i,length(motif))==motif) c++
+    print id, length(up), c
+  }
+}' amanita.fasta | awk 'BEGIN{print "secuencia\tlongitud_bp\tTGCA_count"}1' | column -t
+
+
+#Opción 2 usando grep
+
+csplit -z amanita.muscaria '/>/' '{*}'
+
+# Revisar cada archivo creado
+for archivo in xx*; do
+  # El nombre de la secuencia es la primera linea
+  nombre=$(head -n 1 $archivo)
+
+  # Juntar todas las lineas de la secuencia (quitar los >)
+  secuencia=$(grep -v ">" $archivo | tr -d '\n')
+
+  # Contar cuantas veces aparece TGCA
+  cantidad=$(echo $secuencia | grep -o "TGCA" | wc -l)
+
+  # Mostrar resultado
+  echo "$nombre -> TGCA aparece $cantidad veces"
+done
