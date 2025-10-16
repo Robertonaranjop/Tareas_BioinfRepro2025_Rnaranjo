@@ -22,7 +22,7 @@ Trabajaremos con el archivo:`GATK_ChGdb_recalibrated.autosomes.12262013.snps.kno
    
       R: Se reporta 18 individuos, con 4450360 Sitios. 
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\1.png)
+![](Imagenes\1.png)
 
 2. **¿Cuántos sitios del archivo no tienen datos perdidos?**
    
