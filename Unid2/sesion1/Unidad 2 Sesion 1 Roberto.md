@@ -22,7 +22,7 @@ Trabajaremos con el archivo:`GATK_ChGdb_recalibrated.autosomes.12262013.snps.kno
    
       R: Se reporta 18 individuos, con 4450360 Sitios. 
 
-![](Unid2/sesion1/Imagenes/1.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/1.png)
 
 2. **¿Cuántos sitios del archivo no tienen datos perdidos?**
    
@@ -34,7 +34,7 @@ Trabajaremos con el archivo:`GATK_ChGdb_recalibrated.autosomes.12262013.snps.kno
    
      R: Se reporta que hay 382626 sitios observados a los que no les falta información, de un total de 4450360.
 
-![](Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\)
+![](Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\2.png)
 
 4. **Genera un archivo en tu carpeta de trabajo `sesion1/data`que contiene solo SNPs en una ventana de 2Mb en cualquier cromosoma. Nombra el archivo `CLG_Chr<X>_<Start>-<End>Mb.vcf`donde es número del cromosoma, es el inicio de la ventana genómica y es el final en megabases.**
 
