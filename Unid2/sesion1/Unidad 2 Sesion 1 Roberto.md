@@ -34,7 +34,7 @@ Trabajaremos con el archivo:`GATK_ChGdb_recalibrated.autosomes.12262013.snps.kno
    
      R: Se reporta que hay 382626 sitios observados a los que no les falta información, de un total de 4450360.
 
-![](Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\2.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/2.png)
 
 4. **Genera un archivo en tu carpeta de trabajo `sesion1/data`que contiene solo SNPs en una ventana de 2Mb en cualquier cromosoma. Nombra el archivo `CLG_Chr<X>_<Start>-<End>Mb.vcf`donde es número del cromosoma, es el inicio de la ventana genómica y es el final en megabases.**
 
@@ -50,7 +50,7 @@ R:  Se trabajó en el cromosoma 5, se mantuvieron 18 individuos, se seleccionaro
 
 *El archivo resultante se guardó en: `../results/CLG_Chr5_1-3Mb.recode.vcf`
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\3.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/3.png)
 
 5. **Reporta cuantas variantes tienen el archivo generado**
 
@@ -74,11 +74,11 @@ R: 4392 SNPs bialélicos
    
    el cual nos permite almacenar la informacion en el directorio results, 
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\4.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/4.png)
 
 verificamos el archivo usando:  head ../results/cobertura_promedio.idepth
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\5.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/5.png)
 
 para poder calcular la cobertura promedio total usamos: 
 
@@ -108,7 +108,7 @@ awk 'NR>1 {sum+=$3; n++} END {print "Cobertura promedio total:", sum/n}' ../resu
    
    R:  los resultados se encuentran en la carpeta `frecuencias_alelos_chr5.frq`
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\6.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/6.png)
 
 8. **Filtra el archivo de frecuencias para solo incluir variantes bialélicas (tip: awk puede ser útil para realizar esta tarea, tip2: puedes usar bcftools para filtrar variantes con más de dos alelos antes de calcular las frecuencias)**
    
@@ -127,7 +127,7 @@ awk 'NR>1 {sum+=$3; n++} END {print "Cobertura promedio total:", sum/n}' ../resu
    
     R: los resultado se encuentra en results en el archivo: `frecuencias_bialelicas_chr5.frq`
    
-   ![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\7.png)
+   ![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/7.png)
 
 9. **Llama a un guión escrito en lenguaje R que lee el archivo de frecuencias de variantes bialélicas y guarda un histograma con el espectro de MAF para las variantes bialélicas**.
    
@@ -208,8 +208,8 @@ awk 'NR>1 {sum+=$3; n++} END {print "Cobertura promedio total:", sum/n}' ../resu
               ls -lh ../results/histograma_MAF_chr5.png ../results/resumen_MAF_chr5.txt
    ```
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\8.png)
-![](C:/Users/rnara/Desktop/Repositorio/Tareas_BioinfRepro2025_Rnaranjo/Unid2/sesion1/histograma_MAF_chr5.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/8.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/histograma_MAF_chr5.png)
 
 10.**¿Cuántos sitios tienen una frecuencia del alelo menor <0.05?**
 
@@ -235,7 +235,7 @@ awk 'NR>1 {sum+=$3; n++} END {print "Cobertura promedio total:", sum/n}' ../resu
     
     - **F** = **índice de endogamia** → mide desviación de Hardy-Weinberg
     
-    ![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\9.png)
+    ![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/9.png)
 
 11. **Calcula la diversidad nucleotídica por sitio.**
     
@@ -247,7 +247,7 @@ awk 'NR>1 {sum+=$3; n++} END {print "Cobertura promedio total:", sum/n}' ../resu
     
     R:el resultado es 0.349729
     
-    ![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\10.png)
+    ![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/10.png)
 
 12. **Filtra los sitios que tengan una frecuencia del alelo menor <0.05**
     
@@ -340,7 +340,7 @@ head ../results/chilean_all48_hg19_maf05_missing10.hwe
 
 En la siguiente tabla discutire que significa cada columna de mi resultado: 
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\11.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/11.png)
 
 | Columna     | Ejemplo               | Descripción e interpretación                                                                                                                                                                                                                                                                                           |
 | ----------- | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -486,7 +486,7 @@ aparecio: Error: Duplicate sample ID 'ARI001 ARI001' in --update-ids file.
 
 Si imprime filas, son los `IID_old`/`FID_old` repetidos.
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\12.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/12.png)
 
 ### 2) Crearmos un archivo “dedup” que deje **una sola línea por individuo**
 
@@ -508,7 +508,7 @@ plink \
   --make-bed \
   --out ../results/chilean_all48_hg19_updated_ids
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\13.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/13.png)
 
 d) Realiza una cuna comparación entre el sexo y archivo `fam`y el `popinfo`y calcula la proporción de discordancias
 
@@ -660,13 +660,13 @@ Ejecutamos el codigo
 
 `Rscript ../code/compare_fam_popinfo_sex.R`
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\14.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/14.png)
 
 R:  61 individuos con información de sexo conocida en ambos archivos, se detectó 1 discordancia, correspondiente a la muestra Aymara ARI022, cuyo sexo fue registrado como femenino (2) en el archivo .fam y masculino (1) en el archivo popinfo.
 
 La proporción de discordancia fue de 0.0164 (1.64%), lo que indica una alta concordancia entre ambas fuentes de información. Este resultado sugiere que los metadatos fenotípicos y la información genotípica presentan un adecuado nivel de consistencia, con errores mínimos atribuibles a posibles errores de registro o etiquetado de muestra.
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\15.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/15.png)
 
 f)Realice una prueba de estimación de sexo usando plink y reporte los resultados en formato de tabla para todos los individuos con discordancia entre el sexto reportado en famy el calculado con plink.
 
@@ -703,7 +703,7 @@ lo guardamos y ejectuamos:
 
     R --vanilla -q -e "source('../code/extract_sex_discordant.R')"
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\16.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion1/Imagenes/16.png)
 
 R: Se realizó la estimación de sexo genético utilizando PLINK v1.9 a partir de los genotipos del cromosoma X. De los 48 individuos analizados, se detectaron 2 casos con discordancia entre el sexo reportado en el archivo `.fam` y el inferido genéticamente.  
 Los individuos ARI022 (Aymara) y CDSJ176 (Mapuche) fueron identificados como discordantes, con valores de F = 0.9249 y 0.7578 respectivamente, que los ubican fuera de los rangos esperados (F > 0.8 para hombres, F < 0.2 para mujeres). 
