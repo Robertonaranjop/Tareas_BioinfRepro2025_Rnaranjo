@@ -24,6 +24,9 @@ Trabajaremos con el archivo:`GATK_ChGdb_recalibrated.autosomes.12262013.snps.kno
 
 <<<<<<< HEAD
 ![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid2\sesion1\Imagenes\1.png)
+=======
+![](Unid2/sesion1/Imagenes/Captura de pantalla 2025-10-15 231036.png)
+>>>>>>> 94f7e5ee72da28f42439c5b729797521941a5cbf
 
 2. **¿Cuántos sitios del archivo no tienen datos perdidos?**
    
