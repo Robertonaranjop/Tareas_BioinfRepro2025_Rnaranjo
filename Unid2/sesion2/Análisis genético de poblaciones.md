@@ -25,7 +25,8 @@ Respecto a los resultados podemos reposnder las siguientes preguntas:
 
 1. ¿Cómo se llaman los archivos que contienen las tasas de datos perdidos por SNP y por muestra?
 
-R: Los archivos que se generan son los plink.imiss y plink.lmiss           <img title="" src="file:///C:/Users/rnara/AppData/Roaming/marktext/images/2025-10-21-11-11-25-image.png" alt="" data-align="center">
+R: Los archivos que se generan son los plink.imiss y plink.lmiss           
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/1oficial.png)
 
 2. ¿Cuántas variantes se eliminaron por tener una tasa de datos perdidos mayor a 0.2?
 
