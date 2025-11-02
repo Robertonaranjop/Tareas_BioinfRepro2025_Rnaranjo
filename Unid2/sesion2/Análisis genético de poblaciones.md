@@ -146,13 +146,12 @@ Se eliminaron 3 individos von el filtro de parentezco usando
 
     plink --bfile chilean_all48_hg19_9 \  --remove to_remove_by_relatedness.txt \ --make-bed \  --out chilean_all48_hg19_10
 
-![texto alternativo]()
-
 4. ¿Cuál fue el mayor coeficiente de parentesco efectivamente aceptado?
 
 al revisar aquello que superaron el filtro encontramos la pareja `48 ARI008 ARI019 `con un `PI_HAT` 0.2005
 
-![texto alternativo]()
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/Pareja.png)
+
 ======================================================================
 
 ## Segunda parte
