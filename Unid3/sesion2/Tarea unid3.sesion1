@@ -1,0 +1,115 @@
+# Tarea unid3.sesion2
+
+## 🧩 Parte 1: Selección del estudio (15 min)
+
+1. Ingresa a [https://www.cbioportal.org](https://www.cbioportal.org).  
+2. Explora el listado de estudios y selecciona **un tipo de cáncer sólido** (por ejemplo: *Lung adenocarcinoma*, *Pancreatic cancer*, *Breast cancer*, *Colorectal cancer*).  
+3. El estudio elegido debe tener **al menos 100 pacientes** y **datos genómicos y clínicos disponibles**.
+
+**Completa la siguiente información:**
+
+- **Nombre del estudio:**  
+  
+  > Prostate Cancer (MSK, Clin Cancer Res 2024)mplo: Pancreatic Cancer (MSK, Cancer Cell 2024)
+
+- **Número total de pacientes:**  
+  
+  > 2254
+
+- **Institución responsable:**  
+  
+  > Memorial Sloan Kettering Cancer Center
+
+- **Cita de articulo referencia**
+  
+  >   Lenis AT, Ravichandran V, Brown S, Alam SM, Katims A, Truong H, Reisz PA, Vasselman S, Nweji B, Autio KA, Morris MJ, Slovin SF, Rathkopf D, Danila D, Woo S, Vargas HA, Laudone VP, Ehdaie B, Reuter V, Arcila M, Berger MF, Viale A, Scher HI, Schultz N, Gopalan A, Donoghue MTA, Ostrovnaya I, Stopsack KH, Solit DB, Abida W. Microsatellite Instability, Tumor Mutational Burden, and Response to Immune Checkpoint Blockade in Patients with Prostate Cancer. Clin Cancer Res. 2024 Sep 3;30(17):3894-3903. doi: 10.1158/1078-0432.CCR-23-3403. PMID: 38949888; PMCID: PMC11371520.
+
+---
+
+## 🧬 Parte 2: Análisis genómico
+
+1. Ve a la pestaña **Summary** del estudio.  
+2. Localiza la tabla **“Mutated Genes”**.  
+3. Identifica los **5 genes con mayor frecuencia de mutación**.
+
+| #   | Gen   | N° de mutaciones | N° de pacientes | Frecuencia (%) |
+| --- | ----- | ---------------- | --------------- | -------------- |
+| 1   | TP53  | 688              | 648             | 28.7           |
+| 2   | FOXA1 | 377              | 351             | 15.6           |
+| 3   | SPOP  | 325              | 318             | 14.1           |
+| 4   | PTEN  | 198              | 178             | 7.9            |
+| 5   | APC   | 193              | 173             | 7.7            |
+
+4. Selecciona **uno de esos genes** (ejemplo: *KRAS*, *TP53*, *PIK3CA*) y filtra las muestras 
+   
+   **R**: Seleccione TP53  el cual tiene una frecuencia de 29% 
+
+**Responde:**
+
+- ¿Cuántos pacientes presentan esa mutación?  
+  
+  > 648 pacientes 
+
+- ¿Qué tipo de mutación es más frecuente (missense, nonsense, frameshift)?  
+  
+  > Missense
+
+- ¿Qué vías de señalización aparecen alteradas en la pestaña *Pathways*?  
+  
+  > RTK-PAS, PI3K NOTCH, WNT
+
+## 👩‍⚕️ Parte 3: Análisis clínico
+
+1. Entra en la pestaña **Clinical Data**.  
+
+2. Examina las variables demográficas:
+   
+   - Distribución por sexo: 
+     
+     **R**: Todos del sexo masculino
+- Distribución por edad:
+  
+     **R**: Podemos observar que la edad se distribuye entre los 40 a 89 años, con una media a los 71 años.
+
+     nsertar imagen vs edad 
+
+- Distribución por raza 
+  
+  **R**: Podemos ver que principalmente son no hispanicos no españoles, posterirmente españoles sin certeza, despues son españoles y sud americanos (no brasileños)
+3. Calcula:
+   
+   - **Rango de edad (edad máxima − edad mínima):**  
+     
+     > Podemos observar que la edad se distribuye entre los 40 a 89 años, 
+   
+   - **Mediana de edad (usando “Compare Groups → Median”):**  
+     
+     > 71 años
+
+4. **Interpreta los resultados:**
+   
+   - ¿Existe una predominancia por sexo o edad?  
+     
+     > Una predominancia por edad a partir de los 40 años pero más casos estudiados entre los 55 y 75 años , ya que solo es un cancer que afecta a personas con prostata de sexo masculino.
+   
+   - ¿Qué implicancias podría tener esa distribución para el estudio del cáncer elegido?  
+     
+     > Que es importante que personas con prostata se evaluen desde los 40 años para detectar a tiempo y tomar tratamiento que permita frenar el avace del cancer 
+
+---
+
+## 🧠 Parte 4: Análisis interpretativo
+
+Redacta un breve comentario (5–10 líneas) respondiendo:
+
+> ¿Qué relación observas entre las mutaciones más frecuentes y las características clínicas del grupo?  
+> 
+> ¿Por qué podría ser relevante este gen como biomarcador o diana terapéutica?
+
+_Respuesta:_
+
+```
+En este grupo de cáncer de próstata, las mutaciones más comunes (TP53, PTEN, SPOP, FOXA1, APC) se relacionan con diferentes comportamientos del tumor. TP53 y PTEN suelen aparecer en casos más agresivos, que crecen rápido o responden peor al tratamiento. SPOP y FOXA1 están más presentes en tumores que dependen de las hormonas masculinas, por lo que responden mejor a terapias que bloquean los andrógenos. En cambio, APC y CTNNB1 activan la vía WNT, que favorece la proliferación y resistencia al tratamiento.
+
+El gen CTNNB1 puede ser útil como biomarcador, porque su alteración indica una activación anormal de la vía WNT, lo que ayuda a predecir si el tumor será más resistente a la terapia hormonal. Además, esta vía tiene tratamientos experimentales que podrían servir como dianas terapéuticas en el futuro.
+```
