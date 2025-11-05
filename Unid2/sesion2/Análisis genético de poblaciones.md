@@ -25,7 +25,8 @@ Respecto a los resultados podemos reposnder las siguientes preguntas:
 
 1. ¿Cómo se llaman los archivos que contienen las tasas de datos perdidos por SNP y por muestra?
 
-R: Los archivos que se generan son los plink.imiss y plink.lmiss           <img title="" src="file:///C:/Users/rnara/AppData/Roaming/marktext/images/2025-10-21-11-11-25-image.png" alt="" data-align="center">
+R: Los archivos que se generan son los plink.imiss y plink.lmiss           
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/1oficial.png)
 
 2. ¿Cuántas variantes se eliminaron por tener una tasa de datos perdidos mayor a 0.2?
 
@@ -34,8 +35,8 @@ Para responder esta pregunta usamos el siguiente comando:
     plink --bfile $C/chilean_all48_hg19 --geno 0.2 --make-bed --out chilean_all48_hg19_2
     plink --bfile chilean_all48_hg19_2 --mind 0.2 --make-bed --out chilean_all48_hg19_3
 
-.
-1
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/3.png)
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/4.png)
 
 Vemos que se eliminaron 4680 variantes de 813366 aplicando el filtro 
 
@@ -44,18 +45,18 @@ Vemos que se eliminaron 4680 variantes de 813366 aplicando el filtro
 Para responder esta pregunta usamos el siguiente comando 
 
          plink --bfile chilean_all48_hg19_3 --geno 0.02 --make-bed --out chilean_all48_hg19_4
-    plink --bfile chilean_all48_hg19_4 --mind 0.02 --make-bed --out chilean_all48_hg19_5
+         plink --bfile chilean_all48_hg19_4 --mind 0.02 --make-bed --out chilean_all48_hg19_5
 
 en base a eso podemos responder que 
-**insertar imagen 5
-
 Se eliminaron 46808
+
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/0.02%20paso%201.png)
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/0.02%203-4.png)
 
 4. Basados ​​en los histogramas y en sus cálculos, ¿qué valores umbrales de datos perdidos para muestras y SNPs sugerirían?
 
 El criterio de usar un filtro de 0.2 es apropiado ya que permite eliminar 4680 variantes con perdida de datos, sin perder individuos
-
-.
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/Hisograma.png)
 
 #### paso 2
 
@@ -72,11 +73,11 @@ Indiv. Masculinos F>0.8
 
 Se eliminaron 3 indiv. que fueron identificados con discrepancias.
 
-imagen 3 indiv
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/3%20casos%20detectados.png)
 
 2. ¿Qué riesgo(s) se corre(n) si no se eliminan?
 
-.Los errores asociados es que nuestras inferencias estarian sustentadas en bases de datos mal tabuladas con errores de codificación. Cometiendo errores estadisticos tipo I y II.
+Los errores asociados es que nuestras inferencias estarian sustentadas en bases de datos mal tabuladas con errores de codificación. Cometiendo errores estadisticos tipo I y II.
 
 #### paso 3
 
@@ -89,7 +90,8 @@ la lista de ID´s es `snp_1_22.txt.` almacenado en` /unid2/sesion2 `y la informa
 2. ¿Cuántos SNP se encontraron en cromosomas sexuales?
    Nuestro dataset presenta 574,624 SNP y quedaron 557,922 autosomicos por lo cua hay 16,702 SNP en cromosomas sexuales (574,624 − 557,922).
 
-imagen paso 3
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/Paso%203%20Autosomas.png)
+
 
 3. ¿Cómo calcularía el número de cromosomas que porta cada uno de los alelos para cada SNP?
    
@@ -112,6 +114,9 @@ El nombre del archivos es `plink.hwe`
 
 Al ver la desviaciones  de HWE nos hace mantener p < 1e−6 como umbral razonable. Con este corte se eliminaron 1,281 SNP y quedaron 458,097.
 
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/Paso%204%20HWR.png)
+
+
 #### paso 5
 
 Elimimar padres desconocidos. Para mejorar los analisis de ancestría, las cuales asumen que los SNP no estan correlacionados, es decir que no tienen un fuerte ligamento
@@ -119,32 +124,33 @@ Elimimar padres desconocidos. Para mejorar los analisis de ancestría, las cuale
 ```c
  plink --bfile chilean_all48_hg19_9 --exclude $T/inversion.txt --range --indep-pairwise 50 5 0.2 --out indepSNP
 ```
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/Paso%205.png)
 
 1. ¿Cuántos SNPs en aparente equilibrio de ligamiento se encontraron?
 
-Se eliniaron 346,968 de 450182 usando `--indep-pairwise 50 5 0.2`
+Se elimiaron 346,968 de 450182 usando `--indep-pairwise 50 5 0.2`
 
 2. ¿Cuántos SNP se eliminaron por estar en regiones de inversiones conocidas?
 
 Con el comando `--exclude range` 7,915 SNP en zonas de inversiones 
 
-Ahora para expcluimos todos los individios que tengan un un valor pihat ≥ 0,2.
+Ahora  excluimos todos los individios que tengan un un valor pihat ≥ 0,2.
 
 ```
  plink --bfile chilean_all48_hg19_9 --extract indepSNP.prune.in --genome --min 0.2 --out pihat_min0.2
 ```
-
+ ![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/Paso%205%20(2).png)
 3. ¿Cuántos individuos quedaron luego del filtro de parentesco?
 
 Se eliminaron 3 individos von el filtro de parentezco usando
 
     plink --bfile chilean_all48_hg19_9 \  --remove to_remove_by_relatedness.txt \ --make-bed \  --out chilean_all48_hg19_10
 
-imagen paso 5(2)
-
 4. ¿Cuál fue el mayor coeficiente de parentesco efectivamente aceptado?
 
 al revisar aquello que superaron el filtro encontramos la pareja `48 ARI008 ARI019 `con un `PI_HAT` 0.2005
+
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/Pareja.png)
 
 ======================================================================
 
@@ -200,8 +206,8 @@ Imprimimos el identificador SNP y elimina los duplicados. e intercambiar los ale
  Ver si hay SNP problematicos
 
         $ awk '{print $2, $5, $6}' chilean_all48_hg19_14.bim > chilean_all48_hg19_14_tmp
-     $ sort 1kG_MDS7_tmp chilean_all48_hg19_14_tmp | uniq -u> uncorresponding_SNPs.txt
-     $ wc -l uncorresponding_SNPs.txt0 uncorresponding_SNPs.txt
+        $ sort 1kG_MDS7_tmp chilean_all48_hg19_14_tmp | uniq -u> uncorresponding_SNPs.txt
+        $ wc -l uncorresponding_SNPs.txt0 uncorresponding_SNPs.txt
 
 #### paso 5
 
@@ -304,6 +310,8 @@ Descargamos desde el servidor usando: tambien se encuentran en /unid2/sesion2
     & "C:\Program Files\PuTTY\pscp.exe" `
       bioinfo1@genoma.med.uchile.cl:/home/bioinfo1/rnaranjo/unid2/sesion2/figuras/mds/MDS_C3_vs_C4.pdf `
       "C:\Users\rnara\Pictures\imagenes unid2.S2\MDS_C3_vs_C4.pdf"
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/Comp2y3.png)
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid2/sesion2/Imagenes/comp3v4.png)
 
 De estos podemos decir que los MDS confirman que las referencias continentales están bien definidas, Aymara y Mapuche se ubican sobre un mismo cline amerindio con diferenciación detectable entre ambos, y muestran admixtura principalmente con europeos, sin señales relevantes de componente asiático y con muy poca africana.
 
