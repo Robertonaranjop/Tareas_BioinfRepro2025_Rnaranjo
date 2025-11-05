@@ -79,11 +79,13 @@ Clinical data
   
      **R**: Podemos observar que la edad se distribuye entre los 40 a 89 años, con una media a los 71 años.
 
-    ![texto alternativo] pendiente
 
 - Distribución por raza 
   
   **R**: Podemos ver que principalmente son no hispanicos no españoles, posterirmente españoles sin certeza, despues son españoles y sud americanos (no brasileños)
+
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion2/Imagenes/Etnias.png)
+
 3. Calcula:
    
    - **Rango de edad (edad máxima − edad mínima):**  
@@ -93,6 +95,8 @@ Clinical data
    - **Mediana de edad (usando “Compare Groups → Median”):**  
      
      > 71 años
+
+![texto alternativo](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion2/Imagenes/Edad.png)
 
 4. **Interpreta los resultados:**
    
