@@ -33,7 +33,7 @@ Usando los comandos Unix :
     wc -l ~/181004_curso_calidad_datos_NGS/fastq_raw/S11_R1.fastq.gz
     wc -l ~/181004_curso_calidad_datos_NGS/fastq_raw/S11_R2.fastq.gz
 
-Lo cual nos informa que hay ![](C:\Users\rnara\AppData\Roaming\marktext\images\2025-11-07-16-44-43-image.png)
+Lo cual nos informa que hay ![Insertar imagen 1](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion1/Imagenes/1.png)
 
 R1 21294 lecturas
 
@@ -46,9 +46,9 @@ usamos el comando:
     zcat ~/181004_curso_calidad_datos_NGS/fastq_raw/S3_R1.fastq.gz | head -n 40
     zcat ~/181004_curso_calidad_datos_NGS/fastq_raw/S3_R2.fastq.gz | head -n 40
 
-![](C:\Users\rnara\AppData\Roaming\marktext\images\2025-11-07-16-49-05-image.png)
+![Insertar imagen 2](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion1/Imagenes/2.png)
 
-Insertar imagen 3
+![Insertar imagen 3](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion1/Imagenes/3.png)
 
 ###### Ubicar la lectura 3 e identificar la información disponible. Describe en detalle la información entregada. ¿Donde se entrega la calidad del read?, ¿Cuál es el ID (identificador) del read? Etc. Utilice fechas y etiquetas para identificar cada parte.
 
@@ -71,6 +71,7 @@ El ID es `@M03564:2:000000000–D29D3:1:1101:14451:1389 1:N:0:ACAGTGG+TAGACCTA`
 `ACAGTGG+TAGACCTA`: los índices (index1 e index2) usados para multiplexado. amarillo
 
 calidad celeste 
+![Insertar imagen 4](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion1/Imagenes/4.png)
 
 ##### Traducir el código de calidad para las primeras 10 bases del tercer leer a valores numéricos (Q) usando la codificación entregada en clase.
 
@@ -83,7 +84,7 @@ lo que nos permite traducir el codigo y obtener los valores numericos
 
 
 
-Insertar imagen 5
+![Insertar imagen 5](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion1/Imagenes/5.png)
 
 ## PARTE 2
 
@@ -93,10 +94,10 @@ Bajamos los archivos HTML a nuestro equipo
 
 Ahora interpretamos nuestros datos visualizados en FastQC 
 
-![]()
-![]()
-![]()
-![]()
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion1/Imagenes/R1raw.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion1/Imagenes/R1filt.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion1/Imagenes/R2raw.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion1/Imagenes/R2filt.png)
 
 respecto a eso podemos decir que la poda o trimming eliminó aproximadamente un 13–14 % de lecturas en ambos extremos del par. El %GC se mantiene casi constante (45 a 44–45 %), indicando que el filtrado no introdujo sesgos composicionales. Las longitudes variables en los archivos filtrados evidencian recorte de adaptadores y bases de baja calidad en los extremos 3 
 Ahora si desglsamos respecto a la calidas de por base de la secuencia(A): 
