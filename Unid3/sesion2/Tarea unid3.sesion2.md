@@ -79,7 +79,6 @@ Clinical data
   
      **R**: Podemos observar que la edad se distribuye entre los 40 a 89 años, con una media a los 71 años.
 
-
 - Distribución por raza 
   
   **R**: Podemos ver que principalmente son no hispanicos no españoles, posterirmente españoles sin certeza, despues son españoles y sud americanos (no brasileños)
@@ -124,4 +123,3 @@ _Respuesta:_
 En este grupo de cáncer de próstata, las mutaciones más comunes (TP53, PTEN, SPOP, FOXA1, APC) se relacionan con diferentes comportamientos del tumor. TP53 y PTEN suelen aparecer en casos más agresivos, que crecen rápido o responden peor al tratamiento. SPOP y FOXA1 están más presentes en tumores que dependen de las hormonas masculinas, por lo que responden mejor a terapias que bloquean los andrógenos. En cambio, APC y CTNNB1 activan la vía WNT, que favorece la proliferación y resistencia al tratamiento.
 
 El gen CTNNB1 puede ser útil como biomarcador, porque su alteración indica una activación anormal de la vía WNT, lo que ayuda a predecir si el tumor será más resistente a la terapia hormonal. Además, esta vía tiene tratamientos experimentales que podrían servir como dianas terapéuticas en el futuro.
-```

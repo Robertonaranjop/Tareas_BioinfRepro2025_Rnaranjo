@@ -4,20 +4,17 @@
 
 
 
-Autor: Roberto Naranjo Partarrieu 
+#Autor: Roberto Naranjo Partarrieu 
 
-Paquetes que se usaran: 
+#Paquetes que se usaran: 
+# Autor: Roberto Naranjo Partarrieu
+# Proyecto 1: Do all present-day populations from Europe display the same 3-way admixture?
 
-     library(admixtools)
-     library(tidyverse)
-    
-    # Project 1: Do all present-day populations from Europe displau the same 3-way admixture?
-    
-    ## Modify names to match your dataset!
-    
-    #### Load packages:
-    library(admixtools)
-    library(tidyverse)
+suppressPackageStartupMessages({
+  library(admixtools)
+  library(tidyverse)
+})
+
     
     #### Get f2_blocks. Only once for the entire project
     
