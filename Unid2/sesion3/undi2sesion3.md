@@ -477,5 +477,3 @@ Con el modelo qpAdm de 3 vías (ANF/WHG/Steppe) aparece el patrón europeo clás
 En conclusión Los datos apoyan un modelo de tres fuentes con un gradiente Steppe norte/este . sur y ANF elevado en Mediterráneo/Cerdeña; WHG es relativamente mayor en el Atlántico y que las inestabilidades (WHG<0; Steppe>1 en Russian) reflejan colinealidad/falta de poder en los outgroups y deben corregirse ajustando los outgroups para reportar proporciones finales robustas.
 
 revisar documento adjuntos 
-
-
