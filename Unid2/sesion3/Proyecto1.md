@@ -1,0 +1,479 @@
+# Tarea unid2/sesion3
+
+## Genética de Poblaciones usado estadísticos F
+
+Autor: Roberto Naranjo Partarrieu 
+
+##### Para este estudio someteremos a analisis los siguientes grupos
+
+`Targets` representan un transecto geográfico completo de Europa occidental a oriental, cubriendo distintos niveles de influencia de `Steppe`, `WHG` y `ANF`.
+
+`GBR, Orcadian`  norte europeo, componente WHG alto.
+
+`French, IBS`, `TSI` Europa occidental y mediterránea, mezcla intermedia.
+
+`Italian_North`, `Sardinian` foco en península itálica, contrastando interior vs isla.
+
+`Russian` extremo oriental, Steppe alto
+
+#### Eleccion de outgroup
+
+` Mbuti.DG, CHB.DG`,` Papuan.DG`, `Russia_UstIshim_IUP.DG`, `Denisova.DG.`
+
+#### Fuentes (modelo 3-vías canónico):
+
+`Turkey_Marmara_Barcin_N.AG` (**ANF**), `Luxembourg_Mesolithic.DG` (**WHG**), `Russia_Samara_EBA_Yamnaya.AG` (**Steppe**).
+
+#### Extrae f2  (solo una vez; si ya existen, puedes saltarte esto)
+
+    ℹ Reading allele frequencies from packedancestrymap files...
+    ℹ v62.0_1240k_public.geno has 17629 samples and 1233013 SNPs
+    ℹ Calculating allele frequencies from 600 samples in 16 populations
+    ℹ Expected size of allele frequency data: 296 MB
+    1233k SNPs read...
+    ✔ 1233013 SNPs read in total
+    ! 988347 SNPs remain after filtering. 949090 are polymorphic.
+    ℹ Allele frequency matrix for 988347 SNPs and 16 populations is 198 MB
+    ℹ Computing pairwise f2 for all SNPs and population pairs requires 6324 MB RAM without splitting
+    ℹ Computing without splitting since 6324 < 8000 (maxmem)...
+    ℹ Data written to C:\Users\rnara\Desktop\popgen_shared\aadr_1000G_f2_project1/
+
+#### Carga los bloques f2 recién creados
+
+f2_blocks <- f2_from_precomp(outdir)
+
+    ℹ Reading precomputed data for 16 populations...
+    ℹ Reading f2 data for pair 136 out of 136...
+
+#### Grupo externo
+
+    > f3_results <- f3(f2_blocks, pop1="Mbuti.DG", pop2=target1, pop3=source1)
+    > print(f3_results)
+    # A tibble: 24 × 7
+       pop1     pop2             pop3                            est       se     z     p
+       <chr>    <chr>            <chr>                         <dbl>    <dbl> <dbl> <dbl>
+     1 Mbuti.DG French.DG        Luxembourg_Mesolithic.DG     0.0748 0.000558  134.     0
+     2 Mbuti.DG French.DG        Russia_Samara_EBA_Yamnaya.AG 0.0723 0.000497  145.     0
+     3 Mbuti.DG French.DG        Turkey_Marmara_Barcin_N.AG   0.0727 0.000489  149.     0
+     4 Mbuti.DG GBR.DG           Luxembourg_Mesolithic.DG     0.0755 0.000564  134.     0
+     5 Mbuti.DG GBR.DG           Russia_Samara_EBA_Yamnaya.AG 0.0729 0.000498  147.     0
+     6 Mbuti.DG GBR.DG           Turkey_Marmara_Barcin_N.AG   0.0724 0.000491  147.     0
+     7 Mbuti.DG IBS.DG           Luxembourg_Mesolithic.DG     0.0739 0.000548  135.     0
+     8 Mbuti.DG IBS.DG           Russia_Samara_EBA_Yamnaya.AG 0.0709 0.000490  145.     0
+     9 Mbuti.DG IBS.DG           Turkey_Marmara_Barcin_N.AG   0.0725 0.000484  150.     0
+    10 Mbuti.DG Italian_North.DG Luxembourg_Mesolithic.DG     0.0730 0.000560  130.     0
+
+#### Test f4
+
+###### ¿Están las poblaciones objetivo más cerca de alguna de las fuentes potenciales?
+
+usamos: 
+
+    f4_results <- f4(f2_blocks, pop1 = target1, pop2 = "Turkey_Marmara_Barcin_N.AG",pop3 = "Luxembourg_Mesolithic.DG",pop4 = "Mbuti.DG")                 
+    print(f4_results)
+
+Observamos el siguiente resultado: 
+
+      pop1             pop2                     pop3  pop4      est      se     z         p
+      <chr>            <chr>                    <chr> <chr>   <dbl>   <dbl> <dbl>     <dbl>
+    1 GBR.DG           Turkey_Marmara_Barcin_N… Luxe… Mbut… 0.00467 2.04e-4  22.9 1.33e-115
+    2 French.DG        Turkey_Marmara_Barcin_N… Luxe… Mbut… 0.00396 2.02e-4  19.6 1.38e- 85
+    3 IBS.DG           Turkey_Marmara_Barcin_N… Luxe… Mbut… 0.00303 1.80e-4  16.8 2.93e- 63
+    4 TSI.DG           Turkey_Marmara_Barcin_N… Luxe… Mbut… 0.00172 1.67e-4  10.3 6.54e- 25
+    5 Italian_North.DG Turkey_Marmara_Barcin_N… Luxe… Mbut… 0.00221 1.91e-4  11.6 5.79e- 31
+    6 Sardinian.DG     Turkey_Marmara_Barcin_N… Luxe… Mbut… 0.00268 1.84e-4  14.6 4.25e- 48
+    7 Orcadian.DG      Turkey_Marmara_Barcin_N… Luxe… Mbut… 0.00455 2.43e-4  18.8 1.91e- 78
+    8 Russian.DG       Turkey_Marmara_Barcin_N… Luxe… Mbut… 0.00441 2.37e-4  18.6 4.21e- 77
+
+De lo cual podemos decir que todos los `est` son positivos y con `Z`>3 (p ~ 0), así que cada población objetivo comparte más deriva con WHG (`Luxembourg_Mesolithic.DG`) que con ANF (`Barcın`). y valores mas bajos en europeos del sur como es el caso de los italianos que tienen mas respresentativad con ANF
+
+#### 
+
+#### Resultados f4 Target vs Anatolia/Steppe
+
+     f4_results_2 <- f4(f2_blocks, pop1 = target1,pop2 = "Turkey_Marmara_Barcin_N.AG", pop3 = "Russia_Samara_EBA_Yamnaya.AG",pop4 = "Mbuti.DG")
+    
+    
+    
+    
+      pop1             pop2                     pop3  pop4      est      se     z         p
+      <chr>            <chr>                    <chr> <chr>   <dbl>   <dbl> <dbl>     <dbl>
+    1 GBR.DG           Turkey_Marmara_Barcin_N… Russ… Mbut… 3.13e-3 1.39e-4 22.5  2.90e-112
+    2 French.DG        Turkey_Marmara_Barcin_N… Russ… Mbut… 2.46e-3 1.36e-4 18.1  3.33e- 73
+    3 IBS.DG           Turkey_Marmara_Barcin_N… Russ… Mbut… 1.10e-3 1.23e-4  9.01 2.15e- 19
+    4 TSI.DG           Turkey_Marmara_Barcin_N… Russ… Mbut… 1.13e-3 1.16e-4  9.71 2.82e- 22
+    5 Italian_North.DG Turkey_Marmara_Barcin_N… Russ… Mbut… 1.38e-3 1.32e-4 10.4  1.69e- 25
+    6 Sardinian.DG     Turkey_Marmara_Barcin_N… Russ… Mbut… 2.26e-4 1.25e-4  1.81 7.05e-  2
+    7 Orcadian.DG      Turkey_Marmara_Barcin_N… Russ… Mbut… 3.21e-3 1.56e-4 20.6  2.94e- 94
+    8 Russian.DG       Turkey_Marmara_Barcin_N… Russ… Mbut… 2.84e-3 1.55e-4 18.3  3.88e- 75
+    > 
+
+De lo cual podemos decir que los resultados del  f4 (Target(pobls), ANF, Steppe yMbuti) muestran valores positivos y estadísticamente significativos para casi todas las poblaciones europeas modernas, lo que indica que comparten más afinidad genética con las poblaciones de la estepa (Yamnaya) que con los agricultores neolíticos de Anatolia (ANF). Las poblaciones del norte y este de Europa, como GBR, Orcadian y Russian, presentan la señal más fuerte, mientras que las del sur, como TSI e IBS, muestran una relación más débil. En Sardinian.DG, la señal no es significativa, lo que sugiere una menor o nula influencia de la componente de la estepa. En conjunto, estos resultados reflejan un gradiente geográfico en la ascendencia Steppe que disminuye de norte a sur en Europa
+
+#### qpWAVE
+
+cuántas corrientes de ancestría independientes (rank) necesitas para explicar a tu *target* usando las **fuentes** (`source1`) y los **outgroups** (`outgroup1`). Es el “chequeo” previo a qpAdm.
+
+usamos:
+
+     wave_results <- lapply(target1, function(targ) {
+        print(paste("Corriendo qpWave para:", targ))
+        qpwave(f2_blocks,
+               left = c(targ, source1),
+               right = outgroup1)
+      })
+      names(wave_results) <- target1
+
+Nos retorna
+
+    $GBR.DG
+    $GBR.DG$f4
+    # A tibble: 12 × 8
+       pop1   pop2                         pop3     pop4                           est       se        z        p
+       <chr>  <chr>                        <chr>    <chr>                        <dbl>    <dbl>    <dbl>    <dbl>
+     1 GBR.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG CHB.DG                 -0.00192    0.000122 -15.7    1.62e-55
+     2 GBR.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Papuan.DG              -0.00143    0.000141 -10.1    4.32e-24
+     3 GBR.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Russia_UstIshim_IUP.DG -0.000641   0.000163  -3.95   7.96e- 5
+     4 GBR.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Denisova.DG             0.0000714  0.000107   0.665  5.06e- 1
+     5 GBR.DG Luxembourg_Mesolithic.DG     Mbuti.DG CHB.DG                  0.000893   0.000326   2.74   6.09e- 3
+     6 GBR.DG Luxembourg_Mesolithic.DG     Mbuti.DG Papuan.DG               0.00132    0.000353   3.74   1.86e- 4
+     7 GBR.DG Luxembourg_Mesolithic.DG     Mbuti.DG Russia_UstIshim_IUP.DG  0.00237    0.000436   5.43   5.54e- 8
+     8 GBR.DG Luxembourg_Mesolithic.DG     Mbuti.DG Denisova.DG             0.000726   0.000248   2.93   3.41e- 3
+     9 GBR.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG CHB.DG                  0.000813   0.000167   4.87   1.11e- 6
+    10 GBR.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Papuan.DG               0.000625   0.000188   3.32   9.02e- 4
+    11 GBR.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Russia_UstIshim_IUP.DG  0.000604   0.000199   3.04   2.37e- 3
+    12 GBR.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Denisova.DG            -0.00000390 0.000124  -0.0314 9.75e- 1
+    
+    $GBR.DG$rankdrop
+    # A tibble: 3 × 7
+      f4rank   dof   chisq        p dofdiff chisqdiff  p_nested
+       <int> <int>   <dbl>    <dbl>   <int>     <dbl>     <dbl>
+    1      2     2   0.686 7.10e- 1       4      39.6  5.34e- 8
+    2      1     6  40.2   4.07e- 7       6     286.   7.38e-59
+    3      0    12 326.    1.29e-62      NA      NA   NA       
+    
+    
+    $French.DG
+    $French.DG$f4
+    # A tibble: 12 × 8
+       pop1      pop2                         pop3     pop4                          est       se       z        p
+       <chr>     <chr>                        <chr>    <chr>                       <dbl>    <dbl>   <dbl>    <dbl>
+     1 French.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG CHB.DG                 -0.00168   0.000121 -13.9   4.06e-44
+     2 French.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Papuan.DG              -0.00112   0.000139  -8.04  8.64e-16
+     3 French.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Russia_UstIshim_IUP.DG -0.000368  0.000165  -2.23  2.58e- 2
+     4 French.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Denisova.DG             0.000119  0.000108   1.10  2.69e- 1
+     5 French.DG Luxembourg_Mesolithic.DG     Mbuti.DG CHB.DG                  0.00113   0.000326   3.46  5.44e- 4
+     6 French.DG Luxembourg_Mesolithic.DG     Mbuti.DG Papuan.DG               0.00163   0.000355   4.58  4.60e- 6
+     7 French.DG Luxembourg_Mesolithic.DG     Mbuti.DG Russia_UstIshim_IUP.DG  0.00264   0.000439   6.01  1.83e- 9
+     8 French.DG Luxembourg_Mesolithic.DG     Mbuti.DG Denisova.DG             0.000774  0.000256   3.02  2.51e- 3
+     9 French.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG CHB.DG                  0.00105   0.000169   6.19  5.87e-10
+    10 French.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Papuan.DG               0.000933  0.000191   4.88  1.06e- 6
+    11 French.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Russia_UstIshim_IUP.DG  0.000878  0.000215   4.08  4.46e- 5
+    12 French.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Denisova.DG             0.0000438 0.000132   0.331 7.40e- 1
+    
+    $French.DG$rankdrop
+    # A tibble: 3 × 7
+      f4rank   dof   chisq        p dofdiff chisqdiff  p_nested
+       <int> <int>   <dbl>    <dbl>   <int>     <dbl>     <dbl>
+    1      2     2   0.514 7.74e- 1       4      51.9  1.44e-10
+    2      1     6  52.4   1.53e- 9       6     249.   5.73e-51
+    3      0    12 302.    2.01e-57      NA      NA   NA       
+    
+    
+    $IBS.DG
+    $IBS.DG$f4
+    # A tibble: 12 × 8
+       pop1   pop2                         pop3     pop4                          est        se      z        p
+       <chr>  <chr>                        <chr>    <chr>                       <dbl>     <dbl>  <dbl>    <dbl>
+     1 IBS.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG CHB.DG                 -0.000838  0.000109  -7.67  1.67e-14
+     2 IBS.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Papuan.DG              -0.000381  0.000129  -2.96  3.07e- 3
+     3 IBS.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Russia_UstIshim_IUP.DG  0.0000677 0.000147   0.460 6.45e- 1
+     4 IBS.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Denisova.DG             0.000146  0.0000952  1.54  1.24e- 1
+     5 IBS.DG Luxembourg_Mesolithic.DG     Mbuti.DG CHB.DG                  0.00198   0.000329   6.01  1.86e- 9
+     6 IBS.DG Luxembourg_Mesolithic.DG     Mbuti.DG Papuan.DG               0.00237   0.000356   6.64  3.06e-11
+     7 IBS.DG Luxembourg_Mesolithic.DG     Mbuti.DG Russia_UstIshim_IUP.DG  0.00308   0.000440   6.99  2.79e-12
+     8 IBS.DG Luxembourg_Mesolithic.DG     Mbuti.DG Denisova.DG             0.000801  0.000251   3.20  1.40e- 3
+     9 IBS.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG CHB.DG                  0.00190   0.000172  11.0   3.47e-28
+    10 IBS.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Papuan.DG               0.00167   0.000192   8.74  2.32e-18
+    11 IBS.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Russia_UstIshim_IUP.DG  0.00131   0.000210   6.25  4.04e-10
+    12 IBS.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Denisova.DG             0.0000710 0.000133   0.532 5.95e- 1
+    
+    $IBS.DG$rankdrop
+    # A tibble: 3 × 7
+      f4rank   dof   chisq        p dofdiff chisqdiff  p_nested
+       <int> <int>   <dbl>    <dbl>   <int>     <dbl>     <dbl>
+    1      2     2   0.832 6.60e- 1       4      62.6  8.15e-13
+    2      1     6  63.5   8.92e-12       6     208.   3.45e-42
+    3      0    12 272.    4.15e-51      NA      NA   NA       
+    
+    
+    $TSI.DG
+    $TSI.DG$f4
+    # A tibble: 12 × 8
+       pop1   pop2                         pop3     pop4                          est        se      z        p
+       <chr>  <chr>                        <chr>    <chr>                       <dbl>     <dbl>  <dbl>    <dbl>
+     1 TSI.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG CHB.DG                 -0.00102   0.000107  -9.53  1.62e-21
+     2 TSI.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Papuan.DG              -0.000610  0.000121  -5.02  5.23e- 7
+     3 TSI.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Russia_UstIshim_IUP.DG  0.0000446 0.000135   0.330 7.42e- 1
+     4 TSI.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Denisova.DG             0.000145  0.0000922  1.57  1.16e- 1
+     5 TSI.DG Luxembourg_Mesolithic.DG     Mbuti.DG CHB.DG                  0.00179   0.000335   5.34  9.17e- 8
+     6 TSI.DG Luxembourg_Mesolithic.DG     Mbuti.DG Papuan.DG               0.00214   0.000366   5.84  5.15e- 9
+     7 TSI.DG Luxembourg_Mesolithic.DG     Mbuti.DG Russia_UstIshim_IUP.DG  0.00305   0.000449   6.80  1.04e-11
+     8 TSI.DG Luxembourg_Mesolithic.DG     Mbuti.DG Denisova.DG             0.000800  0.000253   3.16  1.58e- 3
+     9 TSI.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG CHB.DG                  0.00171   0.000171  10.0   1.09e-23
+    10 TSI.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Papuan.DG               0.00145   0.000194   7.44  1.00e-13
+    11 TSI.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Russia_UstIshim_IUP.DG  0.00129   0.000216   5.96  2.47e- 9
+    12 TSI.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Denisova.DG             0.0000694 0.000132   0.526 5.99e- 1
+    
+    $TSI.DG$rankdrop
+    # A tibble: 3 × 7
+      f4rank   dof   chisq        p dofdiff chisqdiff  p_nested
+       <int> <int>   <dbl>    <dbl>   <int>     <dbl>     <dbl>
+    1      2     2   0.605 7.39e- 1       4      73.0  5.23e-15
+    2      1     6  73.6   7.38e-14       6     205.   1.76e-41
+    3      0    12 278.    1.54e-52      NA      NA   NA       
+    
+    
+    $Italian_North.DG
+    $Italian_North.DG$f4
+    # A tibble: 12 × 8
+       pop1             pop2                         pop3     pop4                          est       se      z        p
+       <chr>            <chr>                        <chr>    <chr>                       <dbl>    <dbl>  <dbl>    <dbl>
+     1 Italian_North.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG CHB.DG                 -0.00121   0.000122 -9.92  3.25e-23
+     2 Italian_North.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Papuan.DG              -0.000693  0.000144 -4.83  1.38e- 6
+     3 Italian_North.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Russia_UstIshim_IUP.DG -0.0000228 0.000155 -0.147 8.83e- 1
+     4 Italian_North.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Denisova.DG             0.000141  0.000103  1.37  1.71e- 1
+     5 Italian_North.DG Luxembourg_Mesolithic.DG     Mbuti.DG CHB.DG                  0.00160   0.000343  4.66  3.17e- 6
+     6 Italian_North.DG Luxembourg_Mesolithic.DG     Mbuti.DG Papuan.DG               0.00205   0.000369  5.57  2.51e- 8
+     7 Italian_North.DG Luxembourg_Mesolithic.DG     Mbuti.DG Russia_UstIshim_IUP.DG  0.00299   0.000454  6.57  5.00e-11
+     8 Italian_North.DG Luxembourg_Mesolithic.DG     Mbuti.DG Denisova.DG             0.000796  0.000255  3.12  1.81e- 3
+     9 Italian_North.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG CHB.DG                  0.00152   0.000187  8.12  4.57e-16
+    10 Italian_North.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Papuan.DG               0.00136   0.000211  6.45  1.08e-10
+    11 Italian_North.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Russia_UstIshim_IUP.DG  0.00122   0.000229  5.35  9.03e- 8
+    12 Italian_North.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Denisova.DG             0.0000658 0.000137  0.482 6.30e- 1
+    
+    $Italian_North.DG$rankdrop
+    # A tibble: 3 × 7
+      f4rank   dof   chisq        p dofdiff chisqdiff  p_nested
+       <int> <int>   <dbl>    <dbl>   <int>     <dbl>     <dbl>
+    1      2     2   0.727 6.95e- 1       4      61.0  1.75e-12
+    2      1     6  61.8   1.96e-11       6     215.   1.13e-43
+    3      0    12 277.    3.25e-52      NA      NA   NA       
+    
+    
+    $Sardinian.DG
+    $Sardinian.DG$f4
+    # A tibble: 12 × 8
+       pop1         pop2                         pop3     pop4                          est        se      z        p
+       <chr>        <chr>                        <chr>    <chr>                       <dbl>     <dbl>  <dbl>    <dbl>
+     1 Sardinian.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG CHB.DG                 -0.000590  0.000115  -5.15  2.62e- 7
+     2 Sardinian.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Papuan.DG              -0.000278  0.000126  -2.21  2.74e- 2
+     3 Sardinian.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Russia_UstIshim_IUP.DG  0.000105  0.000146   0.723 4.69e- 1
+     4 Sardinian.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Denisova.DG             0.000164  0.0000961  1.71  8.82e- 2
+     5 Sardinian.DG Luxembourg_Mesolithic.DG     Mbuti.DG CHB.DG                  0.00222   0.000340   6.55  5.77e-11
+     6 Sardinian.DG Luxembourg_Mesolithic.DG     Mbuti.DG Papuan.DG               0.00247   0.000367   6.72  1.79e-11
+     7 Sardinian.DG Luxembourg_Mesolithic.DG     Mbuti.DG Russia_UstIshim_IUP.DG  0.00311   0.000456   6.82  8.97e-12
+     8 Sardinian.DG Luxembourg_Mesolithic.DG     Mbuti.DG Denisova.DG             0.000819  0.000255   3.21  1.32e- 3
+     9 Sardinian.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG CHB.DG                  0.00214   0.000191  11.2   2.54e-29
+    10 Sardinian.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Papuan.DG               0.00178   0.000213   8.36  6.21e-17
+    11 Sardinian.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Russia_UstIshim_IUP.DG  0.00135   0.000247   5.46  4.69e- 8
+    12 Sardinian.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Denisova.DG             0.0000884 0.000150   0.591 5.54e- 1
+    
+    $Sardinian.DG$rankdrop
+    # A tibble: 3 × 7
+      f4rank   dof    chisq        p dofdiff chisqdiff  p_nested
+       <int> <int>    <dbl>    <dbl>   <int>     <dbl>     <dbl>
+    1      2     2   0.0731 9.64e- 1       4      44.8  4.31e- 9
+    2      1     6  44.9    4.89e- 8       6     209.   2.19e-42
+    3      0    12 254.     2.00e-47      NA      NA   NA       
+    
+    
+    $Orcadian.DG
+    $Orcadian.DG$f4
+    # A tibble: 12 × 8
+       pop1        pop2                         pop3     pop4                          est       se       z        p
+       <chr>       <chr>                        <chr>    <chr>                       <dbl>    <dbl>   <dbl>    <dbl>
+     1 Orcadian.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG CHB.DG                 -0.00195   0.000149 -13.1   3.31e-39
+     2 Orcadian.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Papuan.DG              -0.00151   0.000170  -8.89  5.97e-19
+     3 Orcadian.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Russia_UstIshim_IUP.DG -0.000511  0.000192  -2.66  7.71e- 3
+     4 Orcadian.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Denisova.DG             0.0000892 0.000123   0.723 4.70e- 1
+     5 Orcadian.DG Luxembourg_Mesolithic.DG     Mbuti.DG CHB.DG                  0.000866  0.000340   2.55  1.09e- 2
+     6 Orcadian.DG Luxembourg_Mesolithic.DG     Mbuti.DG Papuan.DG               0.00123   0.000368   3.35  7.94e- 4
+     7 Orcadian.DG Luxembourg_Mesolithic.DG     Mbuti.DG Russia_UstIshim_IUP.DG  0.00250   0.000456   5.48  4.20e- 8
+     8 Orcadian.DG Luxembourg_Mesolithic.DG     Mbuti.DG Denisova.DG             0.000744  0.000255   2.91  3.56e- 3
+     9 Orcadian.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG CHB.DG                  0.000785  0.000187   4.20  2.63e- 5
+    10 Orcadian.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Papuan.DG               0.000542  0.000213   2.54  1.10e- 2
+    11 Orcadian.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Russia_UstIshim_IUP.DG  0.000734  0.000226   3.25  1.16e- 3
+    12 Orcadian.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Denisova.DG             0.0000138 0.000136   0.102 9.19e- 1
+    
+    $Orcadian.DG$rankdrop
+    # A tibble: 3 × 7
+      f4rank   dof  chisq        p dofdiff chisqdiff  p_nested
+       <int> <int>  <dbl>    <dbl>   <int>     <dbl>     <dbl>
+    1      2     2   1.90 3.86e- 1       4      37.2  1.66e- 7
+    2      1     6  39.1  6.91e- 7       6     248.   9.09e-51
+    3      0    12 287.   2.01e-54      NA      NA   NA       
+    
+    
+    $Russian.DG
+    $Russian.DG$f4
+    # A tibble: 12 × 8
+       pop1       pop2                         pop3     pop4                          est       se       z         p
+       <chr>      <chr>                        <chr>    <chr>                       <dbl>    <dbl>   <dbl>     <dbl>
+     1 Russian.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG CHB.DG                 -0.00367   0.000145 -25.4   3.11e-142
+     2 Russian.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Papuan.DG              -0.00215   0.000164 -13.0   6.52e- 39
+     3 Russian.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Russia_UstIshim_IUP.DG -0.000947  0.000193  -4.92  8.64e-  7
+     4 Russian.DG Turkey_Marmara_Barcin_N.AG   Mbuti.DG Denisova.DG             0.0000393 0.000123   0.320 7.49e-  1
+     5 Russian.DG Luxembourg_Mesolithic.DG     Mbuti.DG CHB.DG                 -0.000858  0.000329  -2.61  9.12e-  3
+     6 Russian.DG Luxembourg_Mesolithic.DG     Mbuti.DG Papuan.DG               0.000603  0.000354   1.70  8.91e-  2
+     7 Russian.DG Luxembourg_Mesolithic.DG     Mbuti.DG Russia_UstIshim_IUP.DG  0.00206   0.000444   4.64  3.45e-  6
+     8 Russian.DG Luxembourg_Mesolithic.DG     Mbuti.DG Denisova.DG             0.000694  0.000251   2.76  5.78e-  3
+     9 Russian.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG CHB.DG                 -0.000938  0.000166  -5.65  1.65e-  8
+    10 Russian.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Papuan.DG              -0.0000898 0.000193  -0.467 6.41e-  1
+    11 Russian.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Russia_UstIshim_IUP.DG  0.000298  0.000214   1.39  1.64e-  1
+    12 Russian.DG Russia_Samara_EBA_Yamnaya.AG Mbuti.DG Denisova.DG            -0.0000361 0.000133  -0.271 7.86e-  1
+    
+    $Russian.DG$rankdrop
+    # A tibble: 3 × 7
+      f4rank   dof  chisq         p dofdiff chisqdiff   p_nested
+       <int> <int>  <dbl>     <dbl>   <int>     <dbl>      <dbl>
+    1      2     2   3.65 1.62e-  1       4      55.8  2.25e- 11
+    2      1     6  59.4  5.94e- 11       6     688.   2.36e-145
+    3      0    12 747.   3.07e-152      NA      NA   NA       
+
+ de este resultado podemos decir que las pruebas f4 internas confirman que hay asimetrías informativas entre ANF/WHG/Steppe respecto a los outgroups para todos los targets. y qpWave (rankdrop) indica que 3 corrientes de ancestría (ANF, WHG y Steppe) son suficientes para explicar GBR, French, IBS, TSI, Italian_North, Sardinian, Orcadian y Russian (p ≥ 0.05 en f4rank=2); por tanto, corresponde estimar proporciones con qpAdm 3-vías
+
+#### qpADAM
+
+Usaremos el siguiente codigo para evaluar qpADAM
+
+    ##=================================================
+    #Correr qpAdm (2 vías y 3 vías) por cada target
+    ##=================================================
+    
+      message("== qpAdm 2-vías (ANF + WHG) ==")
+      admix_2way_ANF_WHG <- lapply(target1, function(tg){
+        qpadm(f2_blocks,
+              left   = c(tg, "Turkey_Marmara_Barcin_N.AG", "Luxembourg_Mesolithic.DG"),
+              right  = outgroup1,
+              target = tg)
+      })
+      names(admix_2way_ANF_WHG) <- target1
+    
+      message("== qpAdm 2-vías (ANF + Steppe) ==")
+      admix_2way_ANF_Steppe <- lapply(target1, function(tg){
+        qpadm(f2_blocks,
+              left   = c(tg, "Turkey_Marmara_Barcin_N.AG", "Russia_Samara_EBA_Yamnaya.AG"),
+              right  = outgroup1,
+              target = tg)
+      })
+      names(admix_2way_ANF_Steppe) <- target1
+    
+      message("== qpAdm 3-vías (ANF + WHG + Steppe) ==")
+      admix_3way <- lapply(target1, function(tg){
+        qpadm(f2_blocks,
+              left   = c(tg, source1),   # c(tg, ANF, WHG, Steppe)
+              right  = outgroup1,
+              target = tg)
+      })
+      names(admix_3way) <- target1
+    
+    ##==============================
+    ## Extrae y ordena los  weigths 
+    ##==============================
+      library(dplyr); library(readr); library(purrr); library(stringr)
+    
+      extract_weights <- function(lst, model_label){
+        bind_rows(lapply(names(lst), function(tg){
+          x <- lst[[tg]]
+          if (is.null(x) || is.null(x$weights)) return(NULL)
+          x$weights %>%
+            mutate(target = tg, model = model_label) %>%
+            select(model, target, left, weight, se, z)
+        }))
+      }
+    
+      tab_weights <- bind_rows(
+        extract_weights(admix_2way_ANF_WHG,   "2way_ANF+WHG"),
+        extract_weights(admix_2way_ANF_Steppe,"2way_ANF+Steppe"),
+        extract_weights(admix_3way,           "3way_ANF+WHG+Steppe")
+      )
+    
+      write_csv(tab_weights, file.path(RES_DIR, "qpadm_weights_all.csv"))
+      tab_weights %>% arrange(model, target, left) %>% print(n = 50)
+    
+    ###===========================
+    #Marcar modelos posibles
+    ##============================
+    
+    # Define (o re-define) rutas base y carpeta de resultados
+      BASE_DIR <- "C:/Users/rnara/Desktop/popgen_shared"   # ajusta si tu base es otra
+      RES_DIR  <- file.path(BASE_DIR, "resultados_project1")
+      if (!dir.exists(RES_DIR)) dir.create(RES_DIR, recursive = TRUE)
+    
+    
+    
+      check_models <- tab_weights %>%
+        group_by(model, target) %>%
+        summarize(sum_w = sum(weight, na.rm = TRUE),
+                  any_neg = any(weight < -1e-6, na.rm = TRUE),
+                  any_over = any(weight > 1 + 1e-6, na.rm = TRUE),
+                  min_z = min(abs(z), na.rm = TRUE),
+                  .groups = "drop") %>%
+        mutate(plausible = (!any_neg & !any_over & between(sum_w, 0.95, 1.05)))
+    
+      write_csv(check_models, file.path(RES_DIR, "qpadm_model_checks.csv"))
+      check_models
+      readr::write_csv(tab_weights, file.path(RES_DIR, "qpadm_weights_all.csv"))  
+    tab_weights
+    
+    ###===================
+    # Graficar
+    ###==================
+    
+    plot_df <- tab_weights %>%
+      filter(model == "3way_ANF+WHG+Steppe") %>%
+      mutate(Comp = recode(left,
+                           "Turkey_Marmara_Barcin_N.AG"   = "ANF",
+                           "Luxembourg_Mesolithic.DG"     = "WHG",
+                           "Russia_Samara_EBA_Yamnaya.AG" = "Steppe"))
+    
+    library(ggplot2)
+    p <- ggplot(plot_df, aes(x = target, y = weight, fill = Comp)) +
+      geom_col() +
+      geom_errorbar(aes(ymin = pmax(weight - 1.96*se, 0),
+                        ymax = pmin(weight + 1.96*se, 1)),
+                    width = 0.25) +
+      coord_flip() + theme_bw() +http://127.0.0.1:32797/graphics/d477c537-3ce5-4fe5-a1d9-0356410f2909.png
+      labs(x = "", y = "Proporción (qpAdm)", fill = "Componente",
+           title = "qpAdm 3-vías: ANF / WHG / Steppe")
+    ggsave(file.path(RES_DIR, "qpadm_3ways_barplot.png"), p, width = 8, height = 5, dpi = 300)
+    plot("qpadm_3ways_barplot.png")
+    
+    
+    ##tabla
+    
+    # Tabla solo del 3-vías, redondeada y ordenada
+    tab_3way <- tab_weights %>%
+      dplyr::filter(model == "3way_ANF+WHG+Steppe") %>%
+      dplyr::mutate(Componente = dplyr::recode(left,
+                                               "Turkey_Marmara_Barcin_N.AG"   = "ANF",
+                                               "Luxembourg_Mesolithic.DG"     = "WHG",
+                                               "Russia_Samara_EBA_Yamnaya.AG" = "Steppe")) %>%
+      dplyr::select(target, Componente, weight, se, z) %>%
+      dplyr::arrange(target, dplyr::desc(weight))
+    
+    readr::write_csv(tab_3way, file.path(RES_DIR, "qpadm_3ways_only.csv"))
+    print(tab_3way, n = 50)
+
+De esto logramos sacar  los archivos qpADAM 3 vias, revision de modelos y el peso
+
+En la tabla de proporciones de qpAdm 3-vías podemos ver 
+
+    target Componente weight se z <chr> <chr> <dbl> <dbl> <dbl> 1 French.DG Steppe 0.826 0.112 7.40 2 French.DG ANF 0.379 0.0619 6.12 3 French.DG WHG -0.205 0.0962 -2.13 4 GBR.DG Steppe 0.811 0.0947 8.57 5 GBR.DG ANF 0.294 0.0556 5.29 6 GBR.DG WHG -0.105 0.0803 -1.31 7 IBS.DG ANF 0.694 0.0600 11.6 8 IBS.DG Steppe 0.571 0.103 5.55 9 IBS.DG WHG -0.265 0.0896 -2.96 10 Italian_North.DG Steppe 0.726 0.115 6.31 11 Italian_North.DG ANF 0.553 0.0667 8.30 12 Italian_North.DG WHG -0.279 0.0995 -2.81 13 Orcadian.DG Steppe 0.892 0.134 6.63 14 Orcadian.DG ANF 0.280 0.0699 4.01 15 Orcadian.DG WHG -0.172 0.113 -1.52 16 Russian.DG Steppe 1.82 0.253 7.19 17 Russian.DG ANF -0.350 0.127 -2.75 18 Russian.DG WHG -0.471 0.232 -2.03 19 Sardinian.DG ANF 0.780 0.0555 14.1 20 Sardinian.DG Steppe 0.439 0.0995 4.41 21 Sardinian.DG WHG -0.219 0.0873 -2.51 22 TSI.DG Steppe 0.645 0.104 6.20 23 TSI.DG ANF 0.621 0.0582 10.7 24 TSI.DG WHG -0.266 0.0877 -3.03
+
+Con el modelo qpAdm de 3 vías (ANF/WHG/Steppe) aparece el patrón europeo clásico: Steppe es mayor en GBR, Orcadian y Russian, mientras ANF aumenta en el Mediterráneo (TSI, IBS) y especialmente en Sardinian; el componente WHG se concentra relativamente más en el Atlántico norte. Sin embargo, en tu corrida algunos pesos WHG salieron negativos y Russian mostró Steppe > 1, lo que indica colinealidad entre fuentes (WHG y Steppe comparten señal) y/o outgroups poco discriminantes. Esto no invalida el cline, pero sí sugiere estabilizar el set de outgroups (p. ej., Mbuti, CHB, Papuan, Ust’Ishim + 1–2 adicionales como Karitiana/Mixe/PEL) para obtener pesos no negativos y que sumen ≈1 en cada población.
+
+En conclusión Los datos apoyan un modelo de tres fuentes con un gradiente Steppe norte/este . sur y ANF elevado en Mediterráneo/Cerdeña; WHG es relativamente mayor en el Atlántico y que las inestabilidades (WHG<0; Steppe>1 en Russian) reflejan colinealidad/falta de poder en los outgroups y deben corregirse ajustando los outgroups para reportar proporciones finales robustas.
+
+revisar documento adjuntos 
