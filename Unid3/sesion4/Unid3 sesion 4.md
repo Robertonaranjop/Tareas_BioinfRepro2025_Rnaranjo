@@ -17,7 +17,7 @@ Posterior a descargar CLC Genomicos Worckench 25.0.3 y configurar los plugins pr
 (https://resources.qiagenbioinformatics.com/testdata/Example_data_tumor_25.zip.)
 
 ![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/1.jpg)
-
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/1.jpg)
 
 Los archivos target_regions_chr5 y tumor_reads_chr5 fueron importados correctamente al CLC Genomics Workbench mediante la herramienta Standard Import. Estos corresponden a las regiones objetivo del exoma y a las lecturas Illumina del tumor, respectivamente
 
