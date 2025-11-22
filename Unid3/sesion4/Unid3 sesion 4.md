@@ -15,8 +15,9 @@ Posterior a descargar CLC Genomicos Worckench 25.0.3 y configurar los plugins pr
 #### Paso 1 descargar e importar la data
 
 (https://resources.qiagenbioinformatics.com/testdata/Example_data_tumor_25.zip.)
+
 ![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/1.jpg)
-![Insertar imagen x] (https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/1.jpg)
+
 
 Los archivos target_regions_chr5 y tumor_reads_chr5 fueron importados correctamente al CLC Genomics Workbench mediante la herramienta Standard Import. Estos corresponden a las regiones objetivo del exoma y a las lecturas Illumina del tumor, respectivamente
 
@@ -24,7 +25,7 @@ Los archivos target_regions_chr5 y tumor_reads_chr5 fueron importados correctame
 
 para eso vamos a seguir el siguiente workflow → Template Workflows → Biomedical Workflows → Whole Exome Sequencing → Somatic Cancer (WES) → Identify Variants (WES)
 
-![Insertar imagen x] (https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/2.jpg)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/2.jpg)
 
 Parametrizamos segun las recomendaciones del tutorial. 
 
@@ -38,7 +39,7 @@ Identification of Variants in a Tumor Sample Reference Data Set.
 
 En la etapa de Low Frequency Variant Detection, se configuraron los parámetros recomendados en el tutorial: frecuencia mínima de 5% y cobertura mínima de 10 lecturas para asegurar un llamado más confiable y de referencia usaremos "Variants in a Tumor Sample Reference Data Set"
 
-![Insertar imagen x] (https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/3.jpg)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/3.jpg)
 
 #### Paso 3 comprobación y analisis del QC
 
@@ -50,32 +51,32 @@ Tras ejecutar el flujo de trabajo se generaron los archivos principales: mapeo d
 
 #### Tabla de resumen
 
-![Insertar imagen x](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/5.jpg)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/5.jpg)
 
 El promedio de cobertura de las regiones objetivo fue 22.5x, superando el mínimo de 10x recomendado para el llamado de variantes. El 82.6% de los nucleótidos de las regiones objetivo alcanzaron una cobertura ≥10, indicando una adecuada profundidad para este conjunto reducido de datos
 
 ##### Tabla: Fracciones con cobertura
 
-![Insertar imagen x](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/6.jpg)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/6.jpg)
 
 La mayoría de las regiones objetivo muestran una cobertura adecuada, con un 70.97% de ellas cubiertas en más de un 80% de su longitud con ≥10 lecturas. Esto es consistente con un enriquecimiento satisfactorio en este subconjunto del cromosoma 5.
 
 ##### Histograma de fracciones con cobertura ≥10
 
-![Insertar imagen x](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/8.jpg)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/8.jpg)
 
 El histograma de cobertura por fracción del target confirma que los extremos se distribuyen principalmente hacia coberturas altas, aunque algunas regiones muestran baja cobertura, como es esperable en datasets reducidos
 
 ##### Visualización de variantes en Genome Browser
 
-![Insertar imagen x](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/11.jpg)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/11.jpg)
 
 Esta figura muestra en una sola vista las distintas capas de información del cromosoma 5: los genes anotados, la cobertura de las regiones objetivo y las variantes detectadas por el análisis. Al observarlas juntas, pude comprobar si cada variante estaba realmente respaldada por lecturas y si aparecía en una zona con buena cobertura. Para mí, como estudiante que recién está aprendiendo este tipo de análisis y area de estudio, esta visualización fue  útil para entender cómo interpretar una variante dentro de su contexto y para reconocer cuándo un resultado parece confiable y cuándo podría ser un error técnico
 
 #### Paso 4 Revisar variantes
 
-![Insertar imagen x](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/9.jpg)
-![Insertar imagen x](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/10.jpg)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/9.jpg)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/10.jpg)
 
 Se identificaron 16 variantes en el subconjunto analizado del cromosoma 5. La frecuencia de la mayoría supera el 90%, aunque algunas presentan una frecuencia baja (25%), lo que sugiere potenciales artefactos que deben ser interpretados con cautela. Ademas podemos decir que el número de lecturas de soporte (‘Count’) y la calidad promedio permiten discriminar entre variantes confiables y posibles falsos positivos
 
