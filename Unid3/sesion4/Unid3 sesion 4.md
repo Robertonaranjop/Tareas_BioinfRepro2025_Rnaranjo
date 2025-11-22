@@ -44,7 +44,7 @@ En la etapa de Low Frequency Variant Detection, se configuraron los parámetros 
 
 ##### RESULTADOS
 
-![Insertar imagen x](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/4.jpg)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/4.jpg)
 
 Tras ejecutar el flujo de trabajo se generaron los archivos principales: mapeo de lecturas, reporte de cobertura, variantes sin filtrar, variantes filtradas y visualización integrada en Genome Browser. Dentro de los resultados del analisis encontramos el informe con el nombre  Target_region_coverage_report-tumor_reads_chr5 
 
