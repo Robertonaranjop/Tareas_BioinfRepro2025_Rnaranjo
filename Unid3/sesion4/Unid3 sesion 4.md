@@ -24,7 +24,7 @@ Los archivos target_regions_chr5 y tumor_reads_chr5 fueron importados correctame
 
 para eso vamos a seguir el siguiente workflow → Template Workflows → Biomedical Workflows → Whole Exome Sequencing → Somatic Cancer (WES) → Identify Variants (WES)
 
-![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/2.jpg)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion4/Imagenes/2.png)
 
 Parametrizamos segun las recomendaciones del tutorial. 
 
