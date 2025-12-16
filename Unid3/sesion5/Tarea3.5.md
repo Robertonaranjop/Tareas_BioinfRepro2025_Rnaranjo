@@ -234,7 +234,7 @@ adquiridos, mientras que las variantes germinales reflejan polimorfismos constit
 presentes en la población general.
 
 
-# **5.Discusión y conclusiones
+# 5.Discusión y conclusiones
 
 Este trabajo demuestra que nf-core/sarek permite obtener de forma confiable variantes germinales y somáticas a partir de una misma muestra. A pesar de limitaciones técnicas que impidieron la anotación automática con snpEff, la integración de gnomAD y OncoKB permitió contextualizar las variantes detectadas.
 
