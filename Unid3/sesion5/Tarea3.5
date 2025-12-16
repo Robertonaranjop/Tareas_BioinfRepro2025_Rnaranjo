@@ -15,6 +15,10 @@ En esta tarea se utilizó SAREK para obtener variantes **germinales** y **somát
 
 ---
 
+Directorio donde estoy trabajando
+
+    cd rnaranjo/unid3/sesion5/pipeline_sarek/code
+
 ## **Metodología**
 
 ### **1. Organización de carpetas y ambiente**
@@ -34,7 +38,7 @@ Con la siguiente estructura:
 
 Los FASTQ originales se encontraban en:
 
-`~/181004_curso_calidad_datos_NGS/fastq_raw/`
+    `~/181004_curso_calidad_datos_NGS/fastq_raw/`
 
 Se copiaron a `data/` y renombraron para mejor manipulación:
 
@@ -55,13 +59,13 @@ IMAGEN 3
 
 Antes de ejecutar SAREK se activó el ambiente:
 
-`pyenv activate sarek_taller-pyenv`
+    pyenv activate sarek_taller-pyenv
 
 ### **2. Ejecución del pipeline**
 
 Desde `code/` se ejecutaron los análisis:
 
-#### **Análisis germinal (HaplotypeCaller)**
+#### 2.1  **Análisis germinal (HaplotypeCaller)**
 
 ```
 bash sarek_germinal.sh ../data/R1.fastq.gz ../data/R2.fastq.gz ../results S11
@@ -71,7 +75,7 @@ El paso de MultiQC falló por un error de conexión al intentar descargar la ima
 
 IMAGEN 4
 
-#### **Análisis somático (Mutect2 tumor-only)**
+#### **2. 2 Análisis somático (Mutect2 tumor-only)**
 
 ```
 bash sarek_somatic.sh ../data/R1.fastq.gz ../data/R2.fastq.gz ../results S11
@@ -81,15 +85,16 @@ IMAGEN 5
 
 SAREK generó los VCF filtrados en:
 
-`results/variant_calling/haplotypecaller/S11/ results/variant_calling/mutect2/S11/`
+    results/variant_calling/haplotypecaller/S11/ 
+    results/variant_calling/mutect2/S11/`
 
 y un **MultiQC** integrado en:
 
 `results/multiqc/multiqc_report.html`
 
-### **3. Contar y Anotación de variantes con SnpEff**
+### **3. Conteo y selección de variantes**
 
-##### Contar variantes
+##### 3.1 Contar variantes
 
 ```
 # Germinal
@@ -107,25 +112,21 @@ zcat results/variant_calling/mutect2/S11/S11.mutect2.filtered.vcf.gz \
 
 IMAGEN 6
 
-Anotación con **snpEff**:
+### 3.2 Limitación en la anotación con snpEff
 
-Para eso usaremos:
+Se intentó realizar la anotación funcional con **snpEff**
 
-```
-# Germinal
- gunzip -c ../../variant_calling/haplotypecaller/S11/S11.haplotypecaller.filtered.vcf.gz | snpEff ann -Xmx8g GRCh38.86 > S11_germinal.ann.vcf
+    snpEff ann GRCh38.86
 
-# Somático
-gunzip -c ../../variant_calling/mutect2/S10/S11.mutect2.filtered.vcf.gz| snpEff ann -Xmx8g GRCh38.86 > S11_somatic.ann.vcf
-```
+Sin embargo, la anotación no pudo completarse debido a la ausencia de acceso a internet en el servidor:
 
-R: no me dejo realizar la anotción ya que como muestra `UnknownHostException: snpeff.blob.core.windows.net Genome download failed!` el servidior no tiene acceso a internet externo 
+    UnknownHostException: snpeff.blob.core.windows.net
 
-Debido a esta limitación técnica, en lugar de basar el análisis en los reportes de snpEff, se trabajó directamente con los VCF generados por Sarek, seleccionando un subconjunto de variantes germinales y somáticas para su interpretación manual en **gnomAD** (frecuencias germinales) y **OncoKB** (relevancia oncológica somática
+Por esta razón, **no se utilizó snpEff para clasificar impacto funcional**, y el análisis posterior se basó directamente en los VCF generados por Sarek, complementado con consultas manuales a **gnomAD** y **OncoKB**
 
-Para eso usaremos 
+### 3.3. Seleccionar variantes germinales
 
-### 3.1. Seleccionar variantes germinales con ID y PASS
+Se seleccionaron variantes germinales con **ID (rsID)** y **filtro PASS**:
 
 ```
  zcat ../results/variant_calling/haplotypecaller/S11/S11.haplotypecaller.filtered.vcf.gz   | awk '$0 ~ /^#/ {print; next} $3!="." && $7=="PASS"'   > S11_germinal_withID.vcf
@@ -133,32 +134,23 @@ Para eso usaremos
 
 Generando el archivo: `S11_germinal_candidates.vcf`
 
-revisaremos cuantas hay con el comando: 
+Se trabajó con el archivo `S11_germinal_selected.vcf`, que contiene variantes PASS con identificador rsID.  El número de variantes germinales seleccionadas fue calculado mediante:
 
 ```
-grep -v '^#' S11_germinal_withID.vcf | wc -l
+grep -v '^#' S11_germinal_selected.vcf | wc -l
 ```
 
-lo cual nos entrega que hay **57 variantes** , por lo cual para efectos de la tarea tomaremos 20 usando 
+Posteriormente, se inspeccionaron las primeras variantes para su análisis:
 
-```
-grep -v '^#' S11_germinal_withID.vcf | head -n 20 > S11_germinal_selected_body.vcf
+     grep -v '^#' S11_germinal_selected.vcf | head -10
 
-# reconstruir un VCF completo con header:
-grep '^#' S11_germinal_withID.vcf > S11_germinal_selected.vcf
-cat S11_germinal_selected_body.vcf >> S11_germinal_selected.vcf
-```
+IAMGEN 9
 
-Debido a que no fue posible anotar las variantes con snpEff, la selección de variantes germinales se basó en variantes con ID conocido (rsID) y filtro PASS, que luego fueron interrogadas en gnomAD para evaluar su frecuencia y posible relevancia
+### 3.4 Seleccionar variantes somáticas
 
-### 3.2 Seleccionar variantes somáticas con PASS (y opcionalmente genes de cáncer)
+Se trabajó con el archivo `S11_somatic_selected.vcf`
 
-```
-# Variantes somáticas con filtro PASS
-zcat ../results/variant_calling/mutect2/S11/S11.mutect2.filtered.vcf.gz \
-  | awk '$0 !~ /^#/ && $7=="PASS"' \
-  > S11_somatic_PASS.vcf
-```
+Las primeras variantes somáticas fueron revisadas mediante:
 
 y las contamos con
 
@@ -166,36 +158,19 @@ y las contamos con
 wc -l S11_somatic_PASS.vcf
 ```
 
-Lo cual nos entrega **123 variantes**, por lo cual para quedarnos con 20  usaremos al igual que la seccion 3.1:
-
-```
 head -n 20 S11_somatic_PASS.vcf > S11_somatic_selected_body.vcf
 
-# añadir header para tener un VCF “lindo”
-zcat ../results/variant_calling/mutect2/S11/S11.mutect2.filtered.vcf.gz \
-  | grep '^#' > S11_somatic_selected.vcf
-cat S11_somatic_selected_body.vcf >> S11_somatic_selected.vcf
+Obteniendo **123 variantes**, de las cuales se seleccionaron las primeras 20 para análisis manual
 
-```
-En ausencia de anotación funcional automática, se seleccionó un subconjunto de variantes somáticas con filtro PASS, priorizando aquellas en genes con relevancia oncológica cuando fue posible, para su consulta posterior en OncoKB
- germinales
+    head -n 20 S11_somatic_PASS.vcf > S11_somatic_selected_body.vcf
+    
+    zcat ../results/variant_calling/mutect2/S11/S11.mutect2.filtered.vcf.gz \
+    | grep '^#' > S11_somatic_selected.vcf
+    cat S11_somatic_selected_body.vcf >> S11_somatic_selected.vcf
 
-##### para la visulización de las variantes germinales 
-usamos: 
-```
-grep -v '^#' S11_germinal_selected.vcf | head -20
+__________________________________________________________________________________________________
 
-```
-r: Este comando permite revisar una muestra representativa de las primeras 20 variantes germinales, útil para confirmar su estructura (CHROM, POS, ID, REF, ALT, QUAL, FILTER, INFO, FORMAT). 
-
-##### para la visulización de las variantes  somaticas 
-usamos: 
-```
-grep -v '^#' S11_somatic_selected.vcf | head -20
-
-```
-R: Esto permitió revisar rápidamente la composición de las variantes somáticas, que incluyen campos adicionales específicos de Mutect2 (AF, AD, F1R2, F2R1, SB), lo cual ayuda a evaluar la calidad y profundidad de lectura en las mutaciones detectadas
-
+# RESULTADOS
 
 ### **1. Calidad general**
 
@@ -205,119 +180,57 @@ El reporte MultiQC mostró lecturas de buena calidad, sin caída notable de Q-sc
 
 ## **2. Variantes germinales**
 
-El archivo germinal filtrado reportó:
+total de variantes germinales:** **132**
 
-- **Total variantes germinales:** `[[N_GERMINAL]]`
+Las variantes germinales seleccionadas fueron consultadas en **gnomAD**, observándose que la mayoría corresponden a **polimorfismos comunes** con altas frecuencias alélicas en múltiples poblaciones.
 
-Para cuantificarlas:
+| rsID       | Coordenada (GRCh38) | AF gnomAD  | Interpretación                                     |
+| ---------- | ------------------- | ---------- | -------------------------------------------------- |
+| rs12621129 | chr2:197400626 T>C  | ~0.32–0.43 | Polimorfismo común, sin evidencia de patogenicidad |
+| rs1492765  | chr4:54273811 T>C   | ~0.99      | Variante extremadamente frecuente                  |
+| rs869978   | chr4:54273849 T>C   | ~0.75–0.80 | SNP común en múltiples ancestrías                  |
 
-`gzcat S11.haplotypecaller.filtered.vcf.gz | grep -v '^#' | wc -l`
+Interpretación germinal:
+Las variantes germinales reflejan principalmente variación poblacional normal, sin evidencia de alelos raros o patogénicos según gnomAD.
 
-Con snpEff se obtuvo:
+# **2. Variantes somáticas**
 
-- SNPs: `[[X1]]`
+Total de variantes somáticas: 243
 
-- Inserciones: `[[X2]]`
+Las variantes seleccionadas fueron consultadas manualmente en OncoKB, priorizando genes asociados a cáncer.
 
-- Deleciones: `[[X3]]`
+Las variantes seleccionadas fueron consultadas manualmente en OncoKB, priorizando genes asociados a cáncer.
 
-- Impacto alto: `[[X_alto]]`
+| Gen   | Rol              | Evidencia OncoKB | Comentario                                                             |
+| ----- | ---------------- | ---------------- | ---------------------------------------------------------------------- |
+| TP53  | Supresor tumoral | Nivel 3A (gen)   | Gen frecuentemente mutado en cáncer; variante específica no actionable |
+| BRCA1 | Supresor tumoral | Nivel 1 (gen)    | Asociado a reparación de DNA, sin implicancia terapéutica directa      |
+| JAK2  | Oncogén          | Nivel 2 (gen)    | Alteraciones frecuentes en cáncer hematológico                         |
 
-- Impacto moderado: `[[X_mod]]`
+Interpretación somática:
+La mayoría de las variantes somáticas no presentan anotación clínica directa, sugiriendo eventos pasajeros o mutaciones de significado clínico incierto.
 
-- Impacto bajo: `[[X_bajo]]`
+# **4. Comparación germinal vs somático 
 
-Para gnomAD se seleccionaron **10–20 variantes missense con rsID**:
+| Métrica               | Germinal          | Somático      |
+| --------------------- | ----------------- | ------------- |
+| Nº variantes          | 132               | 243           |
+| Origen                | Constitucional    | Adquirido     |
+| Predominio            | SNP poblacionales | SNV tumorales |
+| Impacto clínico       | Bajo              | Incierto      |
+| Variantes compartidas | 0                 | –             |
 
-`grep 'rs' S11_germinal.ann.vcf | grep 'missense_variant' > S11_germinal_missense.vcf`
 
-**Ejemplos representativos (germinales):**
+No se detectaron variantes compartidas entre los conjuntos germinal y somático. 
+Este resultado es consistente con el enfoque metodológico del pipeline nf-core/sarek, ya que Mutect2 (modo tumor-only) aplica filtros poblacionales y heurísticos para excluir variantes germinales del conjunto somático.
 
-| Gen      | rsID        | Tipo     | Coordenada  | AF gnomAD   | Comentario                                       |
-| -------- | ----------- | -------- | ----------- | ----------- | ------------------------------------------------ |
-| [[GEN1]] | [[rsXXXXX]] | missense | [[chr:pos]] | [[0.3–0.7]] | Polimorfismo común, sin efecto patogénico claro. |
-| [[GEN2]] | [[rsYYYYY]] | indel    | [[chr:pos]] | 0           | Variante rara/no reportada.                      |
-| [[GEN3]] | [[rsZZZZZ]] | missense | [[chr:pos]] | [[~1.0]]    | SNP extremadamente común.                        |
+Por lo tanto, las variantes detectadas en el análisis somático corresponden a eventos 
+adquiridos, mientras que las variantes germinales reflejan polimorfismos constitucionales 
+presentes en la población general.
 
-**Interpretación germinal:**  
-La mezcla de polimorfismos frecuentes y variantes raras es coherente con un fenotipo germinal típico; no se observan alelos de alto impacto clínico según gnomAD.
 
----
+# **5.Discusión y conclusiones
 
-## **3. Variantes somáticas**
+Este trabajo demuestra que nf-core/sarek permite obtener de forma confiable variantes germinales y somáticas a partir de una misma muestra. A pesar de limitaciones técnicas que impidieron la anotación automática con snpEff, la integración de gnomAD y OncoKB permitió contextualizar las variantes detectadas.
 
-El VCF somático reportó:
-
-- **Total variantes somáticas:** `[[N_SOMATIC]]`
-
-Cuantificación:
-
-`gzcat S11.mutect2.filtered.vcf.gz | grep -v '^#' | wc -l`
-
-Clasificación con snpEff:
-
-- SNPs: `[[Y1]]`
-
-- Inserciones: `[[Y2]]`
-
-- Deleciones: `[[Y3]]`
-
-- Impacto alto: `[[Y_alto]]`
-
-- Impacto moderado: `[[Y_mod]]`
-
-- Impacto bajo: `[[Y_bajo]]`
-
-Para priorización se seleccionaron **10–20 variantes somáticas no sinónimas**, muchas en genes relacionados históricamente con cáncer:
-
-`grep 'missense_variant' S11_somatic.ann.vcf | \  grep -E 'BRCA1|BRCA2|TP53|KRAS|BRAF|JAK1|JAK2|JAK3' \  > S11_somatic_selected.vcf`
-
-**Ejemplos representativos:**
-
-| Gen      | Cambio proteico | Coordenada  | Oncogenicidad | Evidencia | Comentario                     |
-| -------- | --------------- | ----------- | ------------- | --------- | ------------------------------ |
-| [[GENA]] | [[p.XxxY]]      | [[chr:pos]] | Unknown       | –         | Variante no curada por OncoKB. |
-| [[GENB]] | [[p.AaaBbb]]    | [[chr:pos]] | Unknown       | –         | Significado clínico incierto.  |
-| [[GENC]] | [[p.CccDdd]]    | [[chr:pos]] | Unknown       | –         | Sin terapias asociadas.        |
-
-**Interpretación somática:**  
-La mayoría de las variantes carecen de anotación clínica en OncoKB (nivel de evidencia vacío), lo que sugiere ausencia de drivers claros o biomarcadores “accionables”.
-
----
-
-## **4. Comparación germinal vs somático**
-
-| Métrica               | Germinal       | Somático       |
-| --------------------- | -------------- | -------------- |
-| Nº variantes          | [[N_GERMINAL]] | [[N_SOMATIC]]  |
-| Predominio            | SNP comunes    | SNV adquiridas |
-| Impacto alto          | [[X_alto]]     | [[Y_alto]]     |
-| Variantes compartidas | 0              | –              |
-
-Conclusiones comparativas:
-
-- El conjunto somático es más numeroso y con mayor proporción de variantes de impacto moderado/alto.
-
-- No se detectaron variantes coincidentes entre ambos VCF → las somáticas parecen ser eventos adquiridos.
-
-- Las germinales se alinean claramente con variación poblacional según gnomAD.
-
----
-
-## **Discusión y conclusiones**
-
-Los análisis realizados muestran que **nf-core/sarek permite obtener de forma confiable variantes germinales y somáticas** desde la misma muestra S11.
-
-A partir de la anotación y consulta externa se concluye que:
-
-- **Germinal:**  
-  Predominan polimorfismos comunes, con un pequeño subconjunto de variantes raras. Ninguna mostró evidencia fuerte de patogenicidad según gnomAD.
-
-- **Somático:**  
-  Las variantes seleccionadas no presentaron anotación relevante en OncoKB. No se identificaron mutaciones con clasificación de oncogenicidad alta ni biomarcadores terapéuticos establecidos.
-
-- **Comparación:**  
-  La muestra no presenta elementos somáticos o germinales altamente interpretables clínicamente. La mayor parte de la carga mutacional parece consistir en SNV adquiridas con significado incierto.
-
-En conjunto, el trabajo evidencia la utilidad de SAREK y la importancia de integrar bases de datos como gnomAD y OncoKB para priorizar variantes y contextualizar su potencial relevancia biológica.
-```
+En conjunto, la muestra S11 no presenta variantes con relevancia clínica clara, y la mayoría de las alteraciones corresponden a polimorfismos germinales comunes o mutaciones somáticas de significado incierto. Esto resalta la importancia de combinar pipelines robustos con bases de datos externas para una correcta priorización e interpretación de variantes.
