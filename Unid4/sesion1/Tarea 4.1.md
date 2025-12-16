@@ -36,7 +36,8 @@ Las intensidades crudas fueron transformadas a escala log2 para su evaluación i
 
 Como primer paso, se evaluó la calidad de las mediciones crudas mediante boxplots de los valores de intensidad en escala log2. Se compararon sondas clasificadas como de buena y mala calidad según la anotación oficial de Illumina. En general, las sondas de buena calidad presentan distribuciones más homogéneas y señales más consistentes entre microarreglos.
 
-**Insertar aquí la Figura 1**  
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid4/sesion1/results/boxplot_raw_probe_qc.png)
+
 `boxplot_raw_probe_qc.png`
 
 *Figura 1. Distribución de intensidades log2 crudas por microarreglo, separando sondas bien alineadas (Good probes) y de baja calidad (Bad probes).*
@@ -47,7 +48,7 @@ Como primer paso, se evaluó la calidad de las mediciones crudas mediante boxplo
 
 Adicionalmente, se exploró la distribución de intensidades crudas según el tratamiento experimental. No se observan diferencias sistemáticas extremas entre microarreglos, lo que sugiere una adecuada calidad técnica del experimento.
 
-**Insertar aquí la Figura 2**  
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid4/sesion1/results/boxplot_raw_treatment.png)
 `boxplot_raw_treatment.png`
 
 *Figura 2. Boxplot de intensidades log2 crudas coloreado por tratamiento (Castrado vs Intacto).*
@@ -58,7 +59,7 @@ Adicionalmente, se exploró la distribución de intensidades crudas según el tr
 
 Para complementar este análisis, se generaron gráficos de dispersión entre pares de microarreglos. La alta correlación observada entre las muestras indica una buena reproducibilidad global de los datos.
 
-**Insertar aquí la Figura 3**  
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid4/sesion1/results/Pairs_scatter_log2.png)  
 `Pairs_scatter_log2.png`
 
 *Figura 3. Diagramas de dispersión pareados de las intensidades log2 crudas.*
@@ -87,7 +88,7 @@ El análisis de expresión diferencial se realizó utilizando el paquete limma, 
 
 Se utilizó un umbral de FDR de 0,19 para definir significancia estadística, de acuerdo con la consigna. La distribución de los valores p para los contrastes principales muestra un enriquecimiento de valores bajos, especialmente para el contraste de interacción, lo que sugiere la presencia de efectos biológicamente relevantes.
 
-**Insertar aquí la Figura 4**  
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid4/sesion1/results/P-values_Hist.png)  
 `P-values_Hist.png`
 
 *Figura 4. Histogramas de valores p para los contrastes principales (Genotipo, Tratamiento e Interacción).*
@@ -102,7 +103,7 @@ A partir de los resultados del análisis, se identificaron genes diferencialment
 
 El diagrama de Venn muestra que existe un número considerable de genes afectados exclusivamente por el genotipo o por el tratamiento, así como un subconjunto más reducido asociado a la interacción entre ambos factores.
 
-**Insertar aquí la Figura 5**  
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid4/sesion1/results/vennDiagram_DiffExprs.png)
 `vennDiagram_DiffExprs.png`
 
 *Figura 5. Diagrama de Venn mostrando el número de genes diferencialmente expresados por efecto de genotipo, tratamiento e interacción (FDR ≤ 0.19).*
@@ -112,7 +113,7 @@ El diagrama de Venn muestra que existe un número considerable de genes afectado
 ### 6.2 Interacción genotipo × tratamiento
 
 Al analizar específicamente los genes con interacción significativa, se observa que la respuesta al genotipo depende del tratamiento hormonal y viceversa. Este patrón es consistente con lo descrito en estudios previos para este conjunto de datos.
-**Insertar aquí la Figura 6**  
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid4/sesion1/results/vennDiagram_Int.png)
 `vennDiagram_Int.png`
 
 *Figura 6. Diagramas de Venn que muestran genes cuya respuesta al genotipo depende del tratamiento (izquierda) y genes cuya respuesta al tratamiento depende del genotipo (derecha).*
