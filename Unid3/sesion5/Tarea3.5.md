@@ -198,7 +198,7 @@ Las variantes germinales seleccionadas fueron consultadas en **gnomAD**, observ�
 Interpretación germinal:
 Las variantes germinales reflejan principalmente variación poblacional normal, sin evidencia de alelos raros o patogénicos según gnomAD.
 
-# **2. Variantes somáticas**
+# **3. Variantes somáticas**
 
 Total de variantes somáticas: 243
 
@@ -215,7 +215,7 @@ Las variantes seleccionadas fueron consultadas manualmente en OncoKB, priorizand
 Interpretación somática:
 La mayoría de las variantes somáticas no presentan anotación clínica directa, sugiriendo eventos pasajeros o mutaciones de significado clínico incierto.
 
-# **4. Comparación germinal vs somático 
+# 4. Comparación germinal vs somático 
 
 | Métrica               | Germinal          | Somático      |
 | --------------------- | ----------------- | ------------- |
