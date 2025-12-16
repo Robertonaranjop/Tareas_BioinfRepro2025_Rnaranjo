@@ -2,7 +2,6 @@
 
 Autor: Roberto Naranjo Partarrieu
 
-
 ## 1. Introducción
 
 Este informe presenta el análisis de expresión génica diferencial realizado sobre datos de microarreglos Illumina MouseRef-8 v2.0, enfocado en evaluar:
@@ -26,8 +25,8 @@ Se trabajó con:
 Las intensidades crudas fueron transformadas a escala log2 para su evaluación inicial.
 
 - **Diseño experimental**: `YChrom_design.csv`.
-.
-Se utilizo como flujo de trabajo `/DE_tutorial.R` en su version para Windows
+  .
+  Se utilizo como flujo de trabajo `/DE_tutorial.R` en su version para Windows
 
 ---
 
@@ -87,7 +86,6 @@ El control por comparaciones múltiples se realizó usando **FDR = 0.19**.
 El análisis de expresión diferencial se realizó utilizando el paquete limma, ajustando un modelo lineal por grupo experimental. Se evaluaron contrastes asociados a los efectos principales de genotipo (Geno), tratamiento (Trt) y su interacción (Int), además de contrastes específicos dentro de cada condición.
 
 Se utilizó un umbral de FDR de 0,19 para definir significancia estadística, de acuerdo con la consigna. La distribución de los valores p para los contrastes principales muestra un enriquecimiento de valores bajos, especialmente para el contraste de interacción, lo que sugiere la presencia de efectos biológicamente relevantes.
-
 
 **Insertar aquí la Figura 4**  
 `P-values_Hist.png`
@@ -152,4 +150,3 @@ El script desarrollado puede ser reutilizado como plantilla para el análisis de
 - Figuras de control de calidad, expresión diferencial y análisis funcional.
 
 ---
-
