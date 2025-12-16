@@ -32,9 +32,11 @@ Con la siguiente estructura:
 - `data/` : archivos FASTQ
 
 - `code/` : scripts `sarek_germinal.sh`, `sarek_somatic.sh`, `local_sarek_8cpus.config`
-  IMAGEN 1
-
+  
 - `results/`: resultados del pipeline
+
+![Figura 1. Creación de directorios y scripts de ejecución](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion5/Imagenes/1.png)
+
 
 Los FASTQ originales se encontraban en:
 
@@ -48,14 +50,15 @@ cp ~/181004_curso_calidad_datos_NGS/fastq_raw/S11_R1.fastq.gz .
 cp ~/181004_curso_calidad_datos_NGS/fastq_raw/S11_R2.fastq.gz .
 ```
 
-IMAGEN 2 
+![Figura 2. Copia de archivos FASTQ originales a data/](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion5/Imagenes/2.png)
+
 
 ```
   mv S11_R1.fastq.gz R1.fastq.gz
   mv S11_R2.fastq.gz R2.fastq.gz
 ```
 
-IMAGEN 3
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion5/Imagenes/3.png)
 
 Antes de ejecutar SAREK se activó el ambiente:
 
@@ -73,7 +76,7 @@ bash sarek_germinal.sh ../data/R1.fastq.gz ../data/R2.fastq.gz ../results S11
 
 El paso de MultiQC falló por un error de conexión al intentar descargar la imagen Singularity correspondiente; el resto del pipeline completó correctamente, por lo que los VCF germinales y somáticos se utilizaron sin el reporte integrado de MultiQC
 
-IMAGEN 4
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion5/Imagenes/4.png)
 
 #### **2. 2 Análisis somático (Mutect2 tumor-only)**
 
@@ -81,7 +84,7 @@ IMAGEN 4
 bash sarek_somatic.sh ../data/R1.fastq.gz ../data/R2.fastq.gz ../results S11
 ```
 
-IMAGEN 5
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion5/Imagenes/5.png)
 
 SAREK generó los VCF filtrados en:
 
@@ -110,7 +113,7 @@ zcat results/variant_calling/mutect2/S11/S11.mutect2.filtered.vcf.gz \
 
 **Somatico**: 243 variantes 
 
-IMAGEN 6
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion5/Imagenes/6.png)
 
 ### 3.2 Limitación en la anotación con snpEff
 
@@ -123,6 +126,8 @@ Sin embargo, la anotación no pudo completarse debido a la ausencia de acceso a 
     UnknownHostException: snpeff.blob.core.windows.net
 
 Por esta razón, **no se utilizó snpEff para clasificar impacto funcional**, y el análisis posterior se basó directamente en los VCF generados por Sarek, complementado con consultas manuales a **gnomAD** y **OncoKB**
+
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion5/Imagenes/7.png)
 
 ### 3.3. Seleccionar variantes germinales
 
@@ -144,7 +149,7 @@ Posteriormente, se inspeccionaron las primeras variantes para su análisis:
 
      grep -v '^#' S11_germinal_selected.vcf | head -10
 
-IAMGEN 9
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid3/sesion5/Imagenes/9.png)
 
 ### 3.4 Seleccionar variantes somáticas
 
