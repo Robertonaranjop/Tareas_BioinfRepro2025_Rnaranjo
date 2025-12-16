@@ -124,7 +124,20 @@ Al analizar específicamente los genes con interacción significativa, se observ
 
 Con el fin de interpretar los resultados a nivel funcional, se realizó un análisis de enriquecimiento de términos Gene Ontology (GO) utilizando el paquete topGO. El análisis se centró en procesos biológicos asociados a genes con interacción significativa entre genotipo y tratamiento.
 
-Entre los términos enriquecidos destacan procesos relacionados con regulación circadiana, metabolismo de esteroides y señalización celular, lo que resulta coherente con el contexto hormonal del experimento y con el tejido analizado.
+Los términos más significativamente enriquecidos se asociaron principalmente a procesos metabólicos de esteroides y lípidos, regulación circadiana de la expresión génica y señalización mediada por receptores de superficie celular. Estos resultados son coherentes con el contexto experimental, dado que el diseño evalúa la respuesta molecular a la castración y su dependencia del cromosoma Y.
+
+La Tabla 1 resume los 4 términos GO más significativos, mientras que la tabla completa se presenta en el [Anexo.](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid4/sesion1/results/GO_BP_Table.csv)
+
+**Tabla 1. Principales términos GO enriquecidos (BP).**
+
+| GO.ID | Proceso biológico | Genes anotados | p-valor (elim) |
+|------|------------------|---------------|---------------|
+| GO:0032922 | Regulación circadiana de la expresión génica | 11 | 0.00046 |
+| GO:0008202 | Metabolismo de esteroides | 38 | 0.00223 |
+| GO:0042632 | Homeostasis de colesterol | 12 | 0.00836 |
+| GO:0006631 | Metabolismo de ácidos grasos | 62 | 0.00677 |
+
+
 
 ---
 
