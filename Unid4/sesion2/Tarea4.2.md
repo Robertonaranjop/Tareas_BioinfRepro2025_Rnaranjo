@@ -67,7 +67,7 @@ d_samples <- dist(t(Xz), method = "euclidean")
 hc.samples <- hclust(d_samples, method = "ward.D2")
 ```
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid4\sesion2\results\hclust_samples_rect.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid4/sesion2/results/hclust_samples_rect.png)
 
 `hclust_samples_rect.png`
 
@@ -93,7 +93,7 @@ d_genes <- Dist(Xz, method = "pearson")
 hc.genes <- hclust(d_genes, method = "ward.D2")
 ```
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid4\sesion2\results\hclust_genes_rect.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid4/sesion2/results/hclust_genes_rect.png)
 
 `hclust_genes_rect.png`  
 
@@ -126,13 +126,13 @@ wss_from_hclust <- function(hc, D, kmax = 10) {
 }
 ```
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid4\sesion2\results\SSQ_samples.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid4/sesion2/results/SSQ_samples.png)
 
 `SSQ_samples.png` *(Gráfico SSQ para clustering de muestras)*
 
 
 
-![](C:\Users\rnara\Desktop\Repositorio\Tareas_BioinfRepro2025_Rnaranjo\Unid4\sesion2\results\SSQ_genes.png)
+![](https://github.com/Robertonaranjop/Tareas_BioinfRepro2025_Rnaranjo/blob/main/Unid4/sesion2/results/SSQ_genes.png)
 
 
 
