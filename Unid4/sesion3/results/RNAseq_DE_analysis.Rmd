@@ -1,0 +1,165 @@
+---
+title: "Análisis de expresión diferencial por RNA-seq en *Sulfolobus acidocaldarius*"
+author: "Roberto Naranjo Partarrieu"
+output:
+  pdf_document:
+    toc: true
+---
+
+## Introducción
+
+El análisis de expresión diferencial mediante RNA-seq permite identificar genes cuya abundancia transcripcional varía entre condiciones experimentales. En este informe se analizan datos de RNA-seq de *Sulfolobus acidocaldarius*, comparando el crecimiento planctónico y en biopelícula, así como genotipos wildtype y mutante para el gen *Lrs14-like*. El objetivo es identificar genes diferencialmente expresados asociados (i) al medio de cultivo y (ii) al genotipo.
+
+## Materiales y Métodos
+
+### Control de calidad, filtrado y alineamiento
+
+Las lecturas crudas en formato FASTQ fueron evaluadas mediante IlluQC (NGSQC Toolkit) para caracterizar su calidad y contenido GC. Posteriormente, se filtraron lecturas de baja calidad (PHRED < 20 en más del 20% de su longitud) para conservar secuencias de alta calidad. Las lecturas filtradas se alinearon contra el genoma de referencia de *S. acidocaldarius* DSM 639 utilizando BWA-MEM.
+
+### Conteo por gen y matriz de conteos
+
+La cuantificación de lecturas por gen se realizó mediante HTSeq-count usando un archivo de anotación en formato GFF3. A partir de los archivos de conteo, se construyó una matriz de conteos por gen (filas) y muestra (columnas), que constituye la entrada para edgeR.
+
+```{}
+library(edgeR)
+```
+
+
+# Carpeta local con archivos .count (debe existir al lado del .Rmd)
+
+
+```{r setup, message=FALSE, warning=FALSE, echo=FALSE}
+input_dir <- "count"
+
+wild_p <- read.delim(file.path(input_dir, "MW001_P.count"), header = FALSE)
+wild_b <- read.delim(file.path(input_dir, "MW001_B3.count"), header = FALSE)
+mut_p  <- read.delim(file.path(input_dir, "0446_P.count"), header = FALSE)
+mut_b  <- read.delim(file.path(input_dir, "0446_B3.count"), header = FALSE)
+
+colnames(wild_p) <- c("Gen_ID","Count")
+colnames(wild_b) <- c("Gen_ID","Count")
+colnames(mut_p)  <- c("Gen_ID","Count")
+colnames(mut_b)  <- c("Gen_ID","Count")
+
+rawcounts <- data.frame(
+wild_p$Gen_ID,
+WildType_P = wild_p$Count,
+WildType_B = wild_b$Count,
+Mutant_P   = mut_p$Count,
+Mutant_B   = mut_b$Count,
+row.names = 1
+)
+
+
+```
+
+### Filtrado previo al análisis de expresión diferencial
+
+Se excluyeron filas de control generadas por HTSeq (p. ej., `__no_feature`, `__ambiguous`) y se aplicó un filtro de expresión para retener genes con CPM > 1 en al menos 3 muestras, con el fin de reducir ruido asociado a genes de muy baja expresión.
+
+
+```{r setup, message=FALSE, warning=FALSE, echo=FALSE}
+rpkm <- cpm(rawcounts)
+
+to_remove <- rownames(rawcounts) %in% c(
+"__no_feature","__ambiguous",
+"__too_low_aQual","__not_aligned",
+"__alignment_not_unique"
+)
+
+keep <- rowSums(rpkm > 1) >= 3 & !to_remove
+rawcounts_f <- rawcounts[keep,]
+
+
+```
+
+## Resultados y Discusión
+### Expresión diferencial asociada al medio de cultivo (planctónico vs biopelícula)
+
+Primero se evaluó el efecto del medio de cultivo (planctónico versus biopelícula), considerando las cuatro muestras disponibles. Se construyó un objeto DGEList, se aplicó normalización (TMM), y se estimaron dispersión común y dispersión por gen. Finalmente, se aplicó exactTest para contrastar planctónico vs biopelícula.
+
+```{r setup, message=FALSE, warning=FALSE, echo=FALSE}
+group_culture <- c("planctonic","biofilm","planctonic","biofilm")
+
+dge_culture <- DGEList(counts = rawcounts_f, group = group_culture)
+dge_culture <- calcNormFactors(dge_culture)
+dge_culture <- estimateCommonDisp(dge_culture)
+dge_culture <- estimateTagwiseDisp(dge_culture)
+
+de_culture <- exactTest(dge_culture, pair = c("planctonic","biofilm"))
+results_culture <- topTags(de_culture, n = nrow(dge_culture))$table
+ids_culture <- rownames(results_culture[results_culture$FDR < 0.1,])
+n_culture <- length(ids_culture)
+
+```
+El contraste por condición de cultivo identificó r `n_culture` genes diferencialmente expresados (FDR < 0.1), lo que sugiere que el modo de crecimiento (biopelícula vs planctónico) ejerce un efecto transcriptómico amplio en S. acidocaldarius bajo las condiciones evaluadas.
+
+Expresión diferencial asociada al genotipo (wildtype vs mutante)
+
+Para aislar el efecto del genotipo, se removieron del análisis los genes que ya resultaron diferenciales por condición de cultivo, y luego se compararon wildtype vs mutante con un enfoque análogo (normalización, dispersión y `exactTest`).
+
+```{r setup, message=FALSE, warning=FALSE, echo=FALSE}
+rawcounts_genotype <- rawcounts_f[!rownames(rawcounts_f) %in% ids_culture,]
+group_genotype <- c("wildtype","wildtype","mutant","mutant")
+
+dge_genotype <- DGEList(counts = rawcounts_genotype, group = group_genotype)
+dge_genotype <- calcNormFactors(dge_genotype)
+dge_genotype <- estimateCommonDisp(dge_genotype)
+dge_genotype <- estimateTagwiseDisp(dge_genotype)
+
+de_genotype <- exactTest(dge_genotype, pair = c("wildtype","mutant"))
+results_genotype <- topTags(de_genotype, n = nrow(dge_genotype))$table
+ids_genotype <- rownames(results_genotype[results_genotype$FDR < 0.1,])
+n_genotype <- length(ids_genotype)
+
+```
+
+En contraste, el análisis por genotipo identificó r n_genotype genes diferencialmente expresados (FDR < 0.1), lo que sugiere un efecto transcriptómico limitado asociado a la mutación en Lrs14-like en comparación con el efecto del modo de crecimiento.
+
+### Visualización e interpretación de los resultados
+
+A continuación se muestran (1) gráficos de dispersión de pseudoconteos (escala log10) para comparar planctónico vs biopelícula dentro de cada genotipo, destacando en rojo los genes diferenciales por condición de cultivo (FDR < 0.1), y (2) histogramas de valores p para los contrastes por cultura y por genotipo.
+
+```{r setup, message=FALSE, warning=FALSE, echo=FALSE}
+de_genes_culture <- rownames(rawcounts_f) %in% ids_culture
+
+pseudocounts <- data.frame(
+WildType_P = log10(dge_culture$pseudo.counts[,1]),
+WildType_B = log10(dge_culture$pseudo.counts[,2]),
+Mutant_P   = log10(dge_culture$pseudo.counts[,3]),
+Mutant_B   = log10(dge_culture$pseudo.counts[,4]),
+DE_C       = de_genes_culture
+)
+
+par(mfrow=c(1,2))
+
+plot(pseudocounts$WildType_P, pseudocounts$WildType_B,
+col = ifelse(pseudocounts$DE_C, "red", "blue"),
+main = "Wildtype",
+xlab = "Planktonic (log10)",
+ylab = "Biofilm (log10)")
+abline(lsfit(pseudocounts$WildType_P, pseudocounts$WildType_B))
+
+plot(pseudocounts$Mutant_P, pseudocounts$Mutant_B,
+col = ifelse(pseudocounts$DE_C, "red", "blue"),
+main = "Mutant",
+xlab = "Planktonic (log10)",
+ylab = "Biofilm (log10)")
+abline(lsfit(pseudocounts$Mutant_P, pseudocounts$Mutant_B))
+
+par(mfrow=c(1,2))
+hist(results_culture$PValue, main="Culture", xlab="P-value")
+hist(results_genotype$PValue, main="Genotype", xlab="P-value")
+```
+
+Los gráficos de dispersión muestran que el contraste planctónico–biopelícula incluye un subconjunto de genes con desviaciones claras respecto de la diagonal, coherente con la detección de un número alto de genes diferenciales por condición de cultivo. Por su parte, la distribución de valores p refuerza que existe una señal estadística más marcada en el contraste por cultura que en el contraste por genotipo.
+
+## Conclusiones
+
+El análisis de expresión diferencial indica que el medio de cultivo (planctónico vs biopelícula) constituye el principal factor que modula la expresión génica en Sulfolobus acidocaldarius en este conjunto de datos. En comparación, el efecto del genotipo mutante para Lrs14-like es limitado y afecta a un número reducido de genes, sugiriendo que, bajo estas condiciones, los cambios transcriptómicos están dominados por el modo de crecimiento.
+
+
+rmarkdown::render("RNAseq_DE_analysis.Rmd")
+
+getwd()
+

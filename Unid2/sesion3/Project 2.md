@@ -7,21 +7,22 @@
     ## Modify names to match your dataset!
     
     #### Load packages:
-    library(admixtools)
-    library(tidyverse)
+library(admixtools)
+library(tidyverse)
     
     #### Get f2_blocks. Only once for the entire project
+  
     
-    target2 <- c("Russia_MLBA_Sintashta.AG", "Kazakhstan_Maitan_MLBA_Alakul.AG", "Russia_LBA_Srubnaya_Alakul.SG")
-    source2 <- c("Iran_GanjDareh_N.AG", "Russia_Sidelkino_HG.SG")
-    outgroup2 <- c("Mbuti.DG", "CHB.DG", "Papuan.DG", "Russia_UstIshim_IUP.DG", "Denisova.DG")
+  target2 <- c("Russia_MLBA_Sintashta.AG", "Kazakhstan_Maitan_MLBA_Alakul.AG", "Russia_LBA_Srubnaya_Alakul.SG")
+  source2 <- c("Iran_GanjDareh_N.AG", "Russia_Sidelkino_HG.SG")
+  outgroup2 <- c("Mbuti.DG", "CHB.DG", "Papuan.DG", "Russia_UstIshim_IUP.DG", "Denisova.DG")
     
     
-    all_pops <- c(target2, source2, outgroup2)
+  all_pops <- c(target2, source2, outgroup2)
     prefix <- "v62.0_1240k_public"
     outdir <- "aadr_1000G_f2_proyect2"
     
-    extract_f2(pref = prefix,
+  extract_f2(pref = prefix,
                outdir = outdir,
                pops = all_pops,          # only populations to analyze
                overwrite = TRUE,
@@ -29,7 +30,8 @@
                verbose = TRUE)
     
     #### Load f2_blocks
-    f2_blocks <- f2_from_precomp(outdir)
+    
+  f2_blocks <- f2_from_precomp(outdir)
     
     #### Outgroup-f3: shared drift between target and sources
     #pop1=outgroup; pop2=target groups or populations; pop3=the ones to test shared drift with

@@ -1,0 +1,283 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Análisis de expresión diferencial por RNA-seq en Sulfolobus acidocaldarius},
+  pdfauthor={Roberto Naranjo Partarrieu},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Análisis de expresión diferencial por RNA-seq en Sulfolobus
+acidocaldarius}
+\author{Roberto Naranjo Partarrieu}
+\date{}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+\subsection{Introducción}\label{introducciuxf3n}
+
+El análisis de expresión diferencial mediante RNA-seq permite
+identificar genes cuya abundancia transcripcional varía entre
+condiciones experimentales. En este estudio se analizan datos de RNA-seq
+de \emph{Sulfolobus acidocaldarius}, comparando el crecimiento
+planctónico y en biopelícula, así como genotipos wildtype y mutante para
+el gen \emph{Lrs14-like}. El objetivo es identificar genes
+diferencialmente expresados asociados al medio de cultivo y al genotipo.
+
+\subsection{Materiales y Métodos}\label{materiales-y-muxe9todos}
+
+\subsubsection{Control de calidad de
+lecturas}\label{control-de-calidad-de-lecturas}
+
+Las lecturas crudas en formato FASTQ fueron evaluadas mediante el
+programa IlluQC del paquete NGSQC Toolkit para caracterizar la calidad
+de las secuencias, su distribución de puntajes PHRED y el contenido de
+GC.
+
+\subsubsection{Filtrado de secuencias}\label{filtrado-de-secuencias}
+
+Las lecturas fueron filtradas eliminando aquellas con baja calidad
+(PHRED \textless{} 20 en más del 20\% de su longitud), conservando
+únicamente secuencias de alta calidad para los análisis posteriores.
+
+\subsubsection{Alineamiento al genoma de
+referencia}\label{alineamiento-al-genoma-de-referencia}
+
+Las lecturas filtradas fueron alineadas contra el genoma de referencia
+de \emph{Sulfolobus acidocaldarius} DSM 639 utilizando el algoritmo
+BWA-MEM.
+
+\subsubsection{Estimación de abundancia
+génica}\label{estimaciuxf3n-de-abundancia-guxe9nica}
+
+La cuantificación de lecturas por gen se realizó mediante HTSeq-count,
+empleando un archivo de anotación en formato GFF3.
+
+\subsubsection{Análisis de expresión
+diferencial}\label{anuxe1lisis-de-expresiuxf3n-diferencial}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(edgeR)}
+
+\NormalTok{input\_dir }\OtherTok{\textless{}{-}} \StringTok{"count"}
+
+\NormalTok{wild\_p }\OtherTok{\textless{}{-}} \FunctionTok{read.delim}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(input\_dir, }\StringTok{"MW001\_P.count"}\NormalTok{), }\AttributeTok{header =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{wild\_b }\OtherTok{\textless{}{-}} \FunctionTok{read.delim}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(input\_dir, }\StringTok{"MW001\_B3.count"}\NormalTok{), }\AttributeTok{header =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{mut\_p  }\OtherTok{\textless{}{-}} \FunctionTok{read.delim}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(input\_dir, }\StringTok{"0446\_P.count"}\NormalTok{), }\AttributeTok{header =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{mut\_b  }\OtherTok{\textless{}{-}} \FunctionTok{read.delim}\NormalTok{(}\FunctionTok{file.path}\NormalTok{(input\_dir, }\StringTok{"0446\_B3.count"}\NormalTok{), }\AttributeTok{header =} \ConstantTok{FALSE}\NormalTok{)}
+
+\FunctionTok{colnames}\NormalTok{(wild\_p) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Gen\_ID"}\NormalTok{,}\StringTok{"Count"}\NormalTok{)}
+\FunctionTok{colnames}\NormalTok{(wild\_b) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Gen\_ID"}\NormalTok{,}\StringTok{"Count"}\NormalTok{)}
+\FunctionTok{colnames}\NormalTok{(mut\_p)  }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Gen\_ID"}\NormalTok{,}\StringTok{"Count"}\NormalTok{)}
+\FunctionTok{colnames}\NormalTok{(mut\_b)  }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Gen\_ID"}\NormalTok{,}\StringTok{"Count"}\NormalTok{)}
+
+\NormalTok{rawcounts }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+\NormalTok{  wild\_p}\SpecialCharTok{$}\NormalTok{Gen\_ID,}
+  \AttributeTok{WildType\_P =}\NormalTok{ wild\_p}\SpecialCharTok{$}\NormalTok{Count,}
+  \AttributeTok{WildType\_B =}\NormalTok{ wild\_b}\SpecialCharTok{$}\NormalTok{Count,}
+  \AttributeTok{Mutant\_P   =}\NormalTok{ mut\_p}\SpecialCharTok{$}\NormalTok{Count,}
+  \AttributeTok{Mutant\_B   =}\NormalTok{ mut\_b}\SpecialCharTok{$}\NormalTok{Count,}
+  \AttributeTok{row.names =} \DecValTok{1}
+\NormalTok{)}
+
+\NormalTok{rpkm }\OtherTok{\textless{}{-}} \FunctionTok{cpm}\NormalTok{(rawcounts)}
+
+\NormalTok{to\_remove }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(rawcounts) }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"\_\_no\_feature"}\NormalTok{,}\StringTok{"\_\_ambiguous"}\NormalTok{,}
+  \StringTok{"\_\_too\_low\_aQual"}\NormalTok{,}\StringTok{"\_\_not\_aligned"}\NormalTok{,}
+  \StringTok{"\_\_alignment\_not\_unique"}
+\NormalTok{)}
+
+\NormalTok{keep }\OtherTok{\textless{}{-}} \FunctionTok{rowSums}\NormalTok{(rpkm }\SpecialCharTok{\textgreater{}} \DecValTok{1}\NormalTok{) }\SpecialCharTok{\textgreater{}=} \DecValTok{3} \SpecialCharTok{\&} \SpecialCharTok{!}\NormalTok{to\_remove}
+\NormalTok{rawcounts\_f }\OtherTok{\textless{}{-}}\NormalTok{ rawcounts[keep,]}
+
+\NormalTok{group\_culture }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"planctonic"}\NormalTok{,}\StringTok{"biofilm"}\NormalTok{,}\StringTok{"planctonic"}\NormalTok{,}\StringTok{"biofilm"}\NormalTok{)}
+
+\NormalTok{dge\_culture }\OtherTok{\textless{}{-}} \FunctionTok{DGEList}\NormalTok{(}\AttributeTok{counts =}\NormalTok{ rawcounts\_f, }\AttributeTok{group =}\NormalTok{ group\_culture)}
+\NormalTok{dge\_culture }\OtherTok{\textless{}{-}} \FunctionTok{calcNormFactors}\NormalTok{(dge\_culture)}
+\NormalTok{dge\_culture }\OtherTok{\textless{}{-}} \FunctionTok{estimateCommonDisp}\NormalTok{(dge\_culture)}
+\NormalTok{dge\_culture }\OtherTok{\textless{}{-}} \FunctionTok{estimateTagwiseDisp}\NormalTok{(dge\_culture)}
+
+\NormalTok{de\_culture }\OtherTok{\textless{}{-}} \FunctionTok{exactTest}\NormalTok{(dge\_culture, }\AttributeTok{pair =} \FunctionTok{c}\NormalTok{(}\StringTok{"planctonic"}\NormalTok{,}\StringTok{"biofilm"}\NormalTok{))}
+\NormalTok{results\_culture }\OtherTok{\textless{}{-}} \FunctionTok{topTags}\NormalTok{(de\_culture, }\AttributeTok{n =} \FunctionTok{nrow}\NormalTok{(dge\_culture))}\SpecialCharTok{$}\NormalTok{table}
+\NormalTok{ids\_culture }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(results\_culture[results\_culture}\SpecialCharTok{$}\NormalTok{FDR }\SpecialCharTok{\textless{}} \FloatTok{0.1}\NormalTok{,])}
+
+\NormalTok{rawcounts\_genotype }\OtherTok{\textless{}{-}}\NormalTok{ rawcounts\_f[}\SpecialCharTok{!}\FunctionTok{rownames}\NormalTok{(rawcounts\_f) }\SpecialCharTok{\%in\%}\NormalTok{ ids\_culture,]}
+
+\NormalTok{group\_genotype }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"wildtype"}\NormalTok{,}\StringTok{"wildtype"}\NormalTok{,}\StringTok{"mutant"}\NormalTok{,}\StringTok{"mutant"}\NormalTok{)}
+
+\NormalTok{dge\_genotype }\OtherTok{\textless{}{-}} \FunctionTok{DGEList}\NormalTok{(}\AttributeTok{counts =}\NormalTok{ rawcounts\_genotype, }\AttributeTok{group =}\NormalTok{ group\_genotype)}
+\NormalTok{dge\_genotype }\OtherTok{\textless{}{-}} \FunctionTok{calcNormFactors}\NormalTok{(dge\_genotype)}
+\NormalTok{dge\_genotype }\OtherTok{\textless{}{-}} \FunctionTok{estimateCommonDisp}\NormalTok{(dge\_genotype)}
+\NormalTok{dge\_genotype }\OtherTok{\textless{}{-}} \FunctionTok{estimateTagwiseDisp}\NormalTok{(dge\_genotype)}
+
+\NormalTok{de\_genotype }\OtherTok{\textless{}{-}} \FunctionTok{exactTest}\NormalTok{(dge\_genotype, }\AttributeTok{pair =} \FunctionTok{c}\NormalTok{(}\StringTok{"wildtype"}\NormalTok{,}\StringTok{"mutant"}\NormalTok{))}
+\NormalTok{results\_genotype }\OtherTok{\textless{}{-}} \FunctionTok{topTags}\NormalTok{(de\_genotype, }\AttributeTok{n =} \FunctionTok{nrow}\NormalTok{(dge\_genotype))}\SpecialCharTok{$}\NormalTok{table}
+\NormalTok{ids\_genotype }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(results\_genotype[results\_genotype}\SpecialCharTok{$}\NormalTok{FDR }\SpecialCharTok{\textless{}} \FloatTok{0.1}\NormalTok{,])}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Resultados y Discusión}\label{resultados-y-discusiuxf3n}
+
+Se identificaron 163 genes diferencialmente expresados asociados al
+medio de cultivo (planctónico vs biopelícula), mientras que solo un gen
+mostró expresión diferencial significativa entre genotipos. Estos
+resultados indican que el modo de crecimiento ejerce un efecto
+transcriptómico más amplio que la mutación evaluada, sugiriendo que la
+transición a biopelícula constituye el principal factor regulador de la
+expresión génica bajo las condiciones estudiadas.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{de\_genes\_culture }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(rawcounts\_f) }\SpecialCharTok{\%in\%}\NormalTok{ ids\_culture}
+
+\NormalTok{pseudocounts }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}
+\AttributeTok{WildType\_P =} \FunctionTok{log10}\NormalTok{(dge\_culture}\SpecialCharTok{$}\NormalTok{pseudo.counts[,}\DecValTok{1}\NormalTok{]),}
+\AttributeTok{WildType\_B =} \FunctionTok{log10}\NormalTok{(dge\_culture}\SpecialCharTok{$}\NormalTok{pseudo.counts[,}\DecValTok{2}\NormalTok{]),}
+\AttributeTok{Mutant\_P =} \FunctionTok{log10}\NormalTok{(dge\_culture}\SpecialCharTok{$}\NormalTok{pseudo.counts[,}\DecValTok{3}\NormalTok{]),}
+\AttributeTok{Mutant\_B =} \FunctionTok{log10}\NormalTok{(dge\_culture}\SpecialCharTok{$}\NormalTok{pseudo.counts[,}\DecValTok{4}\NormalTok{]),}
+\AttributeTok{DE\_C =}\NormalTok{ de\_genes\_culture}
+\NormalTok{)}
+
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+
+\FunctionTok{plot}\NormalTok{(pseudocounts}\SpecialCharTok{$}\NormalTok{WildType\_P, pseudocounts}\SpecialCharTok{$}\NormalTok{WildType\_B,}
+\AttributeTok{col =} \FunctionTok{ifelse}\NormalTok{(pseudocounts}\SpecialCharTok{$}\NormalTok{DE\_C, }\StringTok{"red"}\NormalTok{, }\StringTok{"blue"}\NormalTok{),}
+\AttributeTok{main =} \StringTok{"Wildtype"}\NormalTok{,}
+\AttributeTok{xlab =} \StringTok{"Planctonic"}\NormalTok{,}
+\AttributeTok{ylab =} \StringTok{"Biofilm"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\FunctionTok{lsfit}\NormalTok{(pseudocounts}\SpecialCharTok{$}\NormalTok{WildType\_P, pseudocounts}\SpecialCharTok{$}\NormalTok{WildType\_B))}
+
+\FunctionTok{plot}\NormalTok{(pseudocounts}\SpecialCharTok{$}\NormalTok{Mutant\_P, pseudocounts}\SpecialCharTok{$}\NormalTok{Mutant\_B,}
+\AttributeTok{col =} \FunctionTok{ifelse}\NormalTok{(pseudocounts}\SpecialCharTok{$}\NormalTok{DE\_C, }\StringTok{"red"}\NormalTok{, }\StringTok{"blue"}\NormalTok{),}
+\AttributeTok{main =} \StringTok{"Mutant"}\NormalTok{,}
+\AttributeTok{xlab =} \StringTok{"Planctonic"}\NormalTok{,}
+\AttributeTok{ylab =} \StringTok{"Biofilm"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\FunctionTok{lsfit}\NormalTok{(pseudocounts}\SpecialCharTok{$}\NormalTok{Mutant\_P, pseudocounts}\SpecialCharTok{$}\NormalTok{Mutant\_B))}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{RNAseq_DE_analysis_files/figure-latex/plots-1.pdf}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{par}\NormalTok{(}\AttributeTok{mfrow=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{))}
+\FunctionTok{hist}\NormalTok{(results\_culture}\SpecialCharTok{$}\NormalTok{PValue, }\AttributeTok{main=}\StringTok{"Culture"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"P{-}value"}\NormalTok{)}
+\FunctionTok{hist}\NormalTok{(results\_genotype}\SpecialCharTok{$}\NormalTok{PValue, }\AttributeTok{main=}\StringTok{"Genotype"}\NormalTok{, }\AttributeTok{xlab=}\StringTok{"P{-}value"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{RNAseq_DE_analysis_files/figure-latex/plots-2.pdf}}
+\#\# Conclusiones
+
+El análisis de expresión diferencial demuestra que el medio de cultivo
+tiene un efecto predominante sobre la expresión génica en Sulfolobus
+acidocaldarius, mientras que la mutación en el gen Lrs14-like presenta
+un impacto transcriptómico limitado y específico.
+
+rmarkdown::render(``RNAseq\_DE\_analysis.Rmd'')
+
+\end{document}
